@@ -37,8 +37,6 @@ import { JOBS_MAX_GLOBAL_REQ_PER_SECOND } from './constants/limits';
 import prepareCache from './helpers/tempBans/redis/prepareCache';
 import { jobsIds } from './constants/ids';
 
-const STOCHASTIC_GUILD_UNBAN_SCHEDULER_TASK_INTERVAL = 1000 as const satisfies MsValue;
-
 const MAX_UNBANS_PER_SECOND = JOBS_MAX_GLOBAL_REQ_PER_SECOND;
 export const BATCH_SIZE: Limit = JOBS_MAX_GLOBAL_REQ_PER_SECOND * 60 * 2; // NOTE: Max req/m * 2
 
@@ -161,7 +159,7 @@ namespace StochasticGuildUnbanScheduler {
   });
 
   export const scheduler = new ToadScheduler();
-  export const job = new SimpleIntervalJob({ milliseconds: STOCHASTIC_GUILD_UNBAN_SCHEDULER_TASK_INTERVAL }, task);
+  export const job = new SimpleIntervalJob({ seconds: 1 }, task);
 }
 
 namespace CacheTempBans {

@@ -1,4 +1,3 @@
-import type { MsValue } from '@wpm-discord-bot/shared-types/Number';
 import type { GuildMember } from 'discord.js';
 
 import {
@@ -25,7 +24,6 @@ import { JOBS_MAX_GLOBAL_REQ_PER_SECOND } from './constants/limits';
 import { jobsIds } from './constants/ids';
 
 export const BATCH_SIZE = JOBS_MAX_GLOBAL_REQ_PER_SECOND;
-const TASK_INTERVAL = 1e3 as const satisfies MsValue;
 
 namespace TimeoutOnBotHandler {
   const task = new Task(jobsIds.TimeoutOnBotHandler, async () => {
@@ -87,7 +85,7 @@ namespace TimeoutOnBotHandler {
   });
 
   export const scheduler = new ToadScheduler();
-  export const job = new SimpleIntervalJob({ milliseconds: TASK_INTERVAL }, task);
+  export const job = new SimpleIntervalJob({ seconds: 1 }, task);
 }
 
 export function startTimeoutOnBotHandler() {
