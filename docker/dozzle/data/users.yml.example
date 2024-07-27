@@ -1,0 +1,6 @@
+users:
+  # The key below is the username, use it to LOGIN. (Yeah I know, this is confusing...)
+  admin:
+    email: '' # Optional, just used to link with Gravatar.
+    name: Boubou # Just the displayed name in the GUI, trying to login with it is pointless.
+    password: a20f1166e5c7449cd95d1a0a4cb30e7d5e5dd8a4fed42844e24fb8a81a3dedda # Generate the password using this bash command: echo -n 'YOUR_VERY_LONG_PASSWORD' | sha256sum

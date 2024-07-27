@@ -1,0 +1,22 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`I18n interpolators (embeds > banCommand) bansAmount > 0 1`] = `
+[
+  "You've been banned 0 times.",
+  "Tu as été banni 0 fois.",
+]
+`;
+
+exports[`I18n interpolators (embeds > banCommand) bansAmount > singular 1`] = `
+[
+  "You've been banned 1 time.",
+  "Tu as été banni 1 fois.",
+]
+`;
+
+exports[`I18n interpolators (embeds > banCommand) bansAmount > plural 1`] = `
+[
+  "You've been banned 2 times.",
+  "Tu as été banni 2 fois.",
+]
+`;

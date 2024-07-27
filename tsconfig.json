@@ -1,0 +1,42 @@
+{
+  "extends": "./tsconfig.commons.json",
+
+  "compilerOptions": {
+    /* https://www.totaltypescript.com/tsconfig-cheat-sheet */
+    "target": "es2022",
+    "moduleDetection": "force",
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "module": "ESNext",
+    "outDir": "dist",
+    "sourceMap": true,
+    "lib": ["es2022"],
+
+    /* From bun */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
+
+    "noFallthroughCasesInSwitch": true,
+
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+
+    /* Custom */
+    "rootDir": ".",
+    "baseUrl": ".",
+    "incremental": true,
+
+    "paths": {
+      "#@/*": ["src/*"],
+      "#𝕃/*": ["src/i18n/*"]
+    }
+  },
+
+  "include": ["src/**/*", "pm2.config.cjs"],
+  "exclude": ["node_modules", "dist", "typecheck-dist"]
+}

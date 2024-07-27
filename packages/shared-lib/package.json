@@ -1,0 +1,212 @@
+{
+  "private": true,
+  "name": "@wpm-discord-bot/shared-lib",
+  "version": "1.0.0",
+  "description": "",
+  "exports": {
+    "./discordjs/attemptToDeleteInteractionReply": "./src/discordjs/attemptToDeleteInteractionReply.ts",
+    "./discordjs/attemptToDeleteMessage": "./src/discordjs/attemptToDeleteMessage.ts",
+    "./discordjs/attemptToEditReply": "./src/discordjs/attemptToEditReply.ts",
+    "./discordjs/attemptToGetGuildVanityCode": "./src/discordjs/attemptToGetGuildVanityCode.ts",
+    "./discordjs/attemptToReplyToInteraction": "./src/discordjs/attemptToReplyToInteraction.ts",
+    "./discordjs/attemptToSendDM": "./src/discordjs/attemptToSendDM.ts",
+    "./discordjs/attemptToSendMessageInChannel": "./src/discordjs/attemptToSendMessageInChannel.ts",
+    "./discordjs/botIsTimedout": "./src/discordjs/botIsTimedout.ts",
+    "./discordjs/buildGuildInteractionFromGuildMemberToAnotherGuildMember": "./src/discordjs/buildGuildInteractionFromGuildMemberToAnotherGuildMember.ts",
+    "./discordjs/canModerateThisMember": "./src/discordjs/canModerateThisMember.ts",
+    "./discordjs/getBannedByMemberIdFromLogs": "./src/discordjs/getBannedByMemberIdFromLogs.ts",
+    "./discordjs/getUserAvatar": "./src/discordjs/getUserAvatar.ts",
+    "./discordjs/getUserOrGuildMemberFromSlashCommandUserOption": "./src/discordjs/getUserOrGuildMemberFromSlashCommandUserOption.ts",
+    "./discordjs/isEveryoneRole": "./src/discordjs/isEveryoneRole.ts",
+    "./discordjs/isChannelWithTextChat": "./src/discordjs/isChannelWithTextChat.ts",
+    "./discordjs/isTimeoutInterruptionOfInteractionCollectorExpectedBehavior": "./src/discordjs/isTimeoutInterruptionOfInteractionCollectorExpectedBehavior.ts",
+    "./discordjs/lazilyFetchChannel": "./src/discordjs/lazilyFetchChannel.ts",
+    "./discordjs/lazilyFetchChannelFromGuildInteractionInChannel": "./src/discordjs/lazilyFetchChannelFromGuildInteractionInChannel.ts",
+    "./discordjs/isGuildInteraction": "./src/discordjs/isGuildInteraction.ts",
+    "./discordjs/isRoleHigherThanOther": "./src/discordjs/isRoleHigherThanOther.ts",
+    "./discordjs/lazilyFetchGuild": "./src/discordjs/lazilyFetchGuild.ts",
+    "./discordjs/lazilyFetchGuildMember": "./src/discordjs/lazilyFetchGuildMember.ts",
+    "./discordjs/lazilyFetchGuildRole": "./src/discordjs/lazilyFetchGuildRole.ts",
+    "./discordjs/moderationBasicMisusages": "./src/discordjs/moderationBasicMisusages.ts",
+    "./discordjs/tryToCheckIfIsAlreadyBanned": "./src/discordjs/tryToCheckIfIsAlreadyBanned.ts",
+    "./discordjs/tryToComputeThatBotHasHigherPermissions": "./src/discordjs/tryToComputeThatBotHasHigherPermissions.ts",
+    "./discordjs/tryToComputeThatMemberHasHigherPermissions": "./src/discordjs/tryToComputeThatMemberHasHigherPermissions.ts",
+    "./discordjs/tryToLazilyFetchGuildBan": "./src/discordjs/tryToLazilyFetchGuildBan.ts",
+    "./lukeed-ms/attemptToParseDurationSlashCommandOption": "./src/lukeed-ms/attemptToParseDurationSlashCommandOption.ts",
+    "./portable/array/shuffle": "./src/portable/array/shuffle.ts",
+    "./portable/array/unique": "./src/portable/array/unique.ts",
+    "./portable/date/getUntilDateUtcAndDiscordMagicTimestampAndMagicCountdown": "./src/portable/date/getUntilDateUtcAndDiscordMagicTimestampAndMagicCountdown.ts",
+    "./portable/date/toUTC": "./src/portable/date/toUTC.ts",
+    "./portable/math/random": "./src/portable/math/random.ts",
+    "./portable/parallelisation/generateTimeQuantum": "./src/portable/parallelisation/generateTimeQuantum.ts",
+    "./portable/prisma/fromPrismaToTypesafeI18nLocales": "./src/portable/prisma/fromPrismaToTypesafeI18nLocales.ts",
+    "./portable/prisma/fromTypesafeI18nToPrismaLocales": "./src/portable/prisma/fromTypesafeI18nToPrismaLocales.ts",
+    "./portable/promise/wait": "./src/portable/promise/wait.ts",
+    "./portable/string/buildMagicChannelId": "./src/portable/string/buildMagicChannelId.ts",
+    "./portable/string/buildMagicCountdown": "./src/portable/string/buildMagicCountdown.ts",
+    "./portable/string/buildMagicRoleId": "./src/portable/string/buildMagicRoleId.ts",
+    "./portable/string/buildMagicUserId": "./src/portable/string/buildMagicUserId.ts",
+    "./portable/string/foldFeedbacks": "./src/portable/string/foldFeedbacks.ts",
+    "./portable/string/shorten": "./src/portable/string/shorten.ts",
+    "./portable/string/surround": "./src/portable/string/surround.ts",
+    "./portable/trace/builders/functions/buildGreetCommandTraceAdditionalInformations": "./src/portable/trace/builders/functions/buildGreetCommandTraceAdditionalInformations.ts",
+    "./portable/trace/builders/functions/buildHelpCommandTraceAdditionalInformations": "./src/portable/trace/builders/functions/buildHelpCommandTraceAdditionalInformations.ts",
+    "./portable/trace/builders/functions/buildModerationCommandTraceAdditionalInformations": "./src/portable/trace/builders/functions/buildModerationCommandTraceAdditionalInformations.ts",
+    "./portable/trace/builders/functions/buildVanityConfigCommandTraceAdditionalInformations": "./src/portable/trace/builders/functions/buildVanityConfigCommandTraceAdditionalInformations.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "discordjs/attemptToDeleteInteractionReply": [
+        "./src/discordjs/attemptToDeleteInteractionReply.ts"
+      ],
+      "discordjs/attemptToDeleteMessage": [
+        "./src/discordjs/attemptToDeleteMessage.ts"
+      ],
+      "discordjs/attemptToEditReply": [
+        "./src/discordjs/attemptToEditReply.ts"
+      ],
+      "discordjs/attemptToGetGuildVanityCode": [
+        "./src/discordjs/attemptToGetGuildVanityCode.ts"
+      ],
+      "discordjs/attemptToReplyToInteraction": [
+        "./src/discordjs/attemptToReplyToInteraction.ts"
+      ],
+      "discordjs/attemptToSendMessageInChannel": [
+        "./src/discordjs/attemptToSendMessageInChannel.ts"
+      ],
+      "discordjs/botIsTimedOut": [
+        "./src/discordjs/botIsTimedOut.ts"
+      ],
+      "discordjs/attemptToSendDM": [
+        "./src/discordjs/attemptToSendDM.ts"
+      ],
+      "discordjs/buildGuildInteractionFromGuildMemberToAnotherGuildMember": [
+        "./src/discordjs/buildGuildInteractionFromGuildMemberToAnotherGuildMember.ts"
+      ],
+      "discordjs/canModerateThisMember": [
+        "./src/discordjs/canModerateThisMember.ts"
+      ],
+      "discordjs/getBannedByMemberIdFromLogs": [
+        "./src/discordjs/getBannedByMemberIdFromLogs.ts"
+      ],
+      "discordjs/getUserAvatar": [
+        "./src/discordjs/getUserAvatar.ts"
+      ],
+      "discordjs/getUserOrGuildMemberFromSlashCommandUserOption": [
+        "./src/discordjs/getUserOrGuildMemberFromSlashCommandUserOption.ts"
+      ],
+      "discordjs/isEveryoneRole": [
+        "./src/discordjs/isEveryoneRole.ts"
+      ],
+      "discordjs/isChannelWithTextChat": [
+        "./src/discordjs/isChannelWithTextChat.ts"
+      ],
+      "discordjs/isTimeoutInterruptionOfInteractionCollectorExpectedBehavior": [
+        "./src/discordjs/isTimeoutInterruptionOfInteractionCollectorExpectedBehavior.ts"
+      ],
+      "discordjs/lazilyFetchChannel": [
+        "./src/discordjs/lazilyFetchChannel.ts"
+      ],
+      "discordjs/lazilyFetchChannelFromGuildInteractionInChannel": [
+        "./src/discordjs/lazilyFetchChannelFromGuildInteractionInChannel.ts"
+      ],
+      "discordjs/lazilyFetchGuild": [
+        "./src/discordjs/lazilyFetchGuild.ts"
+      ],
+      "discordjs/isGuildInteraction": [
+        "./src/discordjs/isGuildInteraction.ts"
+      ],
+      "discordjs/isRoleHigherThanOther": [
+        "./src/discordjs/isRoleHigherThanOther.ts"
+      ],
+      "discordjs/lazilyFetchGuildMember": [
+        "./src/discordjs/lazilyFetchGuildMember.ts"
+      ],
+      "discordjs/lazilyFetchGuildRole": [
+        "./src/discordjs/lazilyFetchGuildRole.ts"
+      ],
+      "discordjs/moderationBasicMisusages": [
+        "./src/discordjs/moderationBasicMisusages.ts"
+      ],
+      "discordjs/tryToCheckIfIsAlreadyBanned": [
+        "./src/discordjs/tryToCheckIfIsAlreadyBanned.ts"
+      ],
+      "discordjs/tryToComputeThatBotHasHigherPermissions": [
+        "./src/discordjs/tryToComputeThatBotHasHigherPermissions.ts"
+      ],
+      "discordjs/tryToComputeThatMemberHasHigherPermissions": [
+        "./src/discordjs/tryToComputeThatMemberHasHigherPermissions.ts"
+      ],
+      "discordjs/tryToLazilyFetchGuildBan": [
+        "./src/discordjs/tryToLazilyFetchGuildBan.ts"
+      ],
+      "lukeed-ms/attemptToParseDurationSlashCommandOption": [
+        "./src/lukeed-ms/attemptToParseDurationSlashCommandOption.ts"
+      ],
+      "portable/array/shuffle": [
+        "./src/portable/array/shuffle.ts"
+      ],
+      "portable/array/unique": [
+        "./src/portable/array/unique.ts"
+      ],
+      "portable/date/getUntilDateUtcAndDiscordMagicTimestampAndMagicCountdown": [
+        "./src/portable/date/getUntilDateUtcAndDiscordMagicTimestampAndMagicCountdown.ts"
+      ],
+      "portable/date/toUTC": [
+        "./src/portable/date/toUTC.ts"
+      ],
+      "portable/math/random": [
+        "./src/portable/math/random.ts"
+      ],
+      "portable/parallelisation/generateTimeQuantum": [
+        "./src/portable/parallelisation/generateTimeQuantum.ts"
+      ],
+      "portable/prisma/fromPrismaToTypesafeI18nLocales": [
+        "./src/portable/prisma/fromPrismaToTypesafeI18nLocales.ts"
+      ],
+      "portable/prisma/fromTypesafeI18nToPrismaLocales": [
+        "./src/portable/prisma/fromTypesafeI18nToPrismaLocales.ts"
+      ],
+      "portable/promise/wait": [
+        "./src/portable/promise/wait.ts"
+      ],
+      "portable/string/buildMagicChannelId": [
+        "./src/portable/string/buildMagicChannelId.ts"
+      ],
+      "portable/string/buildMagicCountdown": [
+        "./src/portable/string/buildMagicCountdown.ts"
+      ],
+      "portable/string/buildMagicRoleId": [
+        "./src/portable/string/buildMagicRoleId.ts"
+      ],
+      "portable/string/buildMagicUserId": [
+        "./src/portable/string/buildMagicUserId.ts"
+      ],
+      "portable/string/foldFeedbacks": [
+        "./src/portable/string/foldFeedbacks.ts"
+      ],
+      "portable/string/shorten": [
+        "./src/portable/string/shorten.ts"
+      ],
+      "portable/string/surround": [
+        "./src/portable/string/surround.ts"
+      ],
+      "portable/trace/builders/functions/buildGreetCommandTraceAdditionalInformations": [
+        "./src/portable/trace/builders/functions/buildGreetCommandTraceAdditionalInformations.ts"
+      ],
+      "portable/trace/builders/functions/buildHelpCommandTraceAdditionalInformations": [
+        "./src/portable/trace/builders/functions/buildHelpCommandTraceAdditionalInformations.ts"
+      ],
+      "portable/trace/builders/functions/buildModerationCommandTraceAdditionalInformations": [
+        "./src/portable/trace/builders/functions/buildModerationCommandTraceAdditionalInformations.ts"
+      ],
+      "portable/trace/builders/functions/buildVanityConfigCommandTraceAdditionalInformations": [
+        "./src/portable/trace/builders/functions/buildVanityConfigCommandTraceAdditionalInformations.ts"
+      ]
+    }
+  },
+  "dependencies": {
+    "@lukeed/ms": "^2.0.2",
+    "discord.js": "^14.15.3"
+  }
+}

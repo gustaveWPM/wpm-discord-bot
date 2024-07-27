@@ -1,0 +1,8 @@
+**/.wireit
+**/dist
+**/typecheck-dist
+**/node_modules
+
+.gitignore
+
+**/prisma/migrations/0_init

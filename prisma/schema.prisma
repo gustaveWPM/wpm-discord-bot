@@ -1,0 +1,384 @@
+// NOTE: https://pris.ly/d/prisma-schema
+
+// NOTE: All the VARCHAR length constraints are duplicated in BotAppHardCodedStaticContext.ts
+
+generator client {
+  provider = "prisma-client-js"
+
+  // NOTE: https://github.com/prisma/prisma/issues/14765#issuecomment-1845646423
+  previewFeatures = ["nativeDistinct"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("BOT_APP_DATABASE_URL")
+}
+
+// NOTE: ELang must be hardcoded due to Prisma limitations
+enum ELang {
+  en_US @map("en-US")
+  fr    @map("fr")
+}
+
+enum EDiscordBumpBots {
+  Disboard
+  Friends
+  DHbump
+  Dtop
+  Zobo
+}
+
+model Guild {
+  id         String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  lang       ELang  @default(en_US)
+  forcedLang ELang?
+
+  isAbandoner      Boolean   @default(false) // NOTE: ATTENTION! May be stale. ALWAYS double-check this with a botMember fetch attempt before critical operations!
+  isAbandonerSince DateTime? // NOTE: ATTENTION! May be stale. ALWAYS double-check this with a botMember fetch attempt before critical operations!
+  isPremiumUntil   DateTime  @default(dbgenerated("'1970-01-01T00:00:00.000Z'"))
+  registeredAt     DateTime  @default(now())
+
+  discordGuildId BigInt @unique @db.BigInt
+
+  // * ... Plugins
+  counterConfig CounterConfig?
+  vanityConfig  VanityConfig?
+
+  greetConfig   GreetConfig?
+  welcomeConfig WelcomeConfig?
+  bumpConfig    BumpConfig?
+  rewardConfig  RewardConfig?
+
+  // * ... Metadatas
+  WarnedMembers                        WarnedMembers[]
+  MutedMembers                         MutedMembers[]
+  KickedMembers                        KickedMembers[]
+  TempBannedMembers                    TempBannedMembers[]
+  DefBannedMembers                     DefBannedMembers[]
+  BannedMembersArchive                 BannedMembersArchive[]
+  TempBannedMembersAbandoners          TempBannedMembersAbandoners[]
+  TempBannedMembersMissingPermsToUnban TempBannedMembersMissingPermsToUnban[]
+
+  @@index([discordGuildId])
+  @@index([registeredAt])
+}
+
+model CounterConfig {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  isRanked         Boolean
+  discordChannelId BigInt  @unique @db.BigInt
+
+  discordGuild   Guild  @relation(fields: [discordGuildId], references: [discordGuildId])
+  discordGuildId BigInt @unique @db.BigInt
+
+  @@index([discordGuildId])
+}
+
+model VanityConfig {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  needle                   String  @db.VarChar(255)
+  needleIsNotCaseSensitive Boolean @default(false)
+
+  discordRoleId BigInt @unique @db.BigInt
+
+  discordGuild   Guild  @relation(fields: [discordGuildId], references: [discordGuildId])
+  discordGuildId BigInt @unique @db.BigInt
+
+  @@index([discordGuildId])
+}
+
+model GreetConfig {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  greetOptions GreetOptions[]
+
+  discordGuild   Guild  @relation(fields: [discordGuildId], references: [discordGuildId])
+  discordGuildId BigInt @unique @db.BigInt
+
+  @@index([discordGuildId])
+}
+
+model GreetOptions {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  discordChannelId BigInt @db.BigInt
+  discordGuildId   BigInt @db.BigInt
+
+  greetConfig   GreetConfig @relation(fields: [greetConfigId], references: [id])
+  greetConfigId String      @db.Uuid
+
+  @@unique([discordGuildId, discordChannelId])
+  @@index([discordGuildId])
+  @@index([discordChannelId])
+}
+
+model WelcomeConfig {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  welcomeMessageOptions WelcomeMessageOptions[]
+  fallbackImageUrl      String?                 @db.VarChar(1024)
+
+  discordGuild   Guild  @relation(fields: [discordGuildId], references: [discordGuildId])
+  discordGuildId BigInt @unique @db.BigInt
+
+  @@index([discordGuildId])
+}
+
+model WelcomeMessageOptions {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  discordRoleId    BigInt  @unique @db.BigInt
+  discordChannelId BigInt  @unique @db.BigInt
+  message          String  @db.VarChar(4096)
+  imageUrl         String? @db.VarChar(1024)
+
+  welcomeConfig   WelcomeConfig @relation(fields: [welcomeConfigId], references: [id])
+  welcomeConfigId String        @db.Uuid
+}
+
+model BumpConfig {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  bumpBotOptions BumpBotOptions[]
+
+  discordGuild   Guild  @relation(fields: [discordGuildId], references: [discordGuildId])
+  discordGuildId BigInt @unique @db.BigInt
+
+  @@index([discordGuildId])
+}
+
+model BumpBotOptions {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  bumpBotLabel       EDiscordBumpBots
+  readyToBumpMessage String           @db.VarChar(4096)
+  thanksMessage      String           @db.VarChar(2048)
+  discordRoleId      BigInt?          @db.BigInt
+  doPingRole         Boolean          @default(false)
+
+  bumpConfig   BumpConfig @relation(fields: [bumpConfigId], references: [id])
+  bumpConfigId String     @db.Uuid
+
+  @@unique([discordRoleId, bumpBotLabel])
+}
+
+model RewardConfig {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  RewardScoreOptions RewardScoreOptions[]
+  guildScoreLabel    String               @db.VarChar(1024)
+
+  discordGuild   Guild  @relation(fields: [discordGuildId], references: [discordGuildId])
+  discordGuildId BigInt @unique @db.BigInt
+
+  @@index([discordGuildId])
+}
+
+model RewardScoreOptions {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  scoreMin      BigInt @db.BigInt
+  discordRoleId BigInt @unique @db.BigInt
+
+  rewardConfig   RewardConfig @relation(fields: [rewardConfigId], references: [id])
+  rewardConfigId String       @db.Uuid
+}
+
+model WarnedMembers {
+  id BigInt @id @default(autoincrement())
+
+  discordUserId  BigInt @db.BigInt
+  discordGuildId BigInt @db.BigInt
+
+  reason   String   @db.VarChar(1024)
+  warnedAt DateTime @default(now())
+  warnedBy BigInt   @db.BigInt
+
+  unwarnReason String?   @db.VarChar(1024)
+  unwarnedAt   DateTime?
+
+  discordGuild Guild @relation(fields: [discordGuildId], references: [discordGuildId])
+
+  @@index([warnedBy])
+  @@index([discordUserId])
+  @@index([discordGuildId])
+}
+
+model MutedMembers {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+
+  discordUserId  BigInt @db.BigInt
+  discordGuildId BigInt @db.BigInt
+
+  reason  String   @db.VarChar(512)
+  mutedAt DateTime @default(now())
+  mutedBy BigInt   @db.BigInt
+
+  until                             DateTime
+  discordMagicTimestamp             BigInt   @db.BigInt
+  discordMagicTimestampHostTimezone String   @db.VarChar(255)
+
+  unmuteReason String?   @db.VarChar(1024)
+  unmutedAt    DateTime?
+
+  discordGuild Guild @relation(fields: [discordGuildId], references: [discordGuildId])
+
+  @@index([mutedBy])
+  @@index([discordUserId])
+  @@index([discordGuildId])
+}
+
+model KickedMembers {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+
+  discordUserId  BigInt @db.BigInt
+  discordGuildId BigInt @db.BigInt
+
+  reason   String   @db.VarChar(512)
+  kickedAt DateTime @default(now())
+  kickedBy BigInt   @db.BigInt
+
+  unkickReason String?   @db.VarChar(1024)
+  unkickedAt   DateTime?
+
+  discordGuild Guild @relation(fields: [discordGuildId], references: [discordGuildId])
+
+  @@index([kickedBy])
+  @@index([discordUserId])
+  @@index([discordGuildId])
+}
+
+// * ... Bans
+
+// 1. Permanent bans
+// {ToDo} Partitioning this on discordGuildId to accelerate garbage collection?
+// NOTE: https://github.com/prisma/prisma/issues/13407
+model DefBannedMembers {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+
+  discordUserId  BigInt @db.BigInt
+  discordGuildId BigInt @db.BigInt
+
+  reason   String   @db.VarChar(512)
+  bannedAt DateTime @default(now())
+  bannedBy BigInt   @db.BigInt
+
+  discordGuild Guild @relation(fields: [discordGuildId], references: [discordGuildId])
+
+  @@unique([discordUserId, discordGuildId])
+  @@index([bannedBy])
+  @@index([discordUserId])
+  @@index([discordGuildId])
+}
+
+// 2. Temporary bans
+// {ToDo} Partitioning this on discordGuildId to accelerate garbage collection?
+// NOTE: https://github.com/prisma/prisma/issues/13407
+model TempBannedMembers {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+
+  discordUserId  BigInt @db.BigInt
+  discordGuildId BigInt @db.BigInt
+
+  reason   String   @db.VarChar(512)
+  bannedAt DateTime @default(now())
+  bannedBy BigInt   @db.BigInt
+
+  until                             DateTime
+  discordMagicTimestamp             BigInt   @db.BigInt
+  discordMagicTimestampHostTimezone String   @db.VarChar(255)
+
+  discordGuild Guild @relation(fields: [discordGuildId], references: [discordGuildId])
+
+  @@unique([discordUserId, discordGuildId])
+  @@index([until])
+  @@index([bannedBy])
+  @@index([discordUserId])
+  @@index([discordGuildId])
+}
+
+// 3. Temporary bans (abandoners)
+// {ToDo} Partitioning this on discordGuildId to accelerate garbage collection?
+// NOTE: https://github.com/prisma/prisma/issues/13407
+model TempBannedMembersAbandoners {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+
+  discordUserId  BigInt @db.BigInt
+  discordGuildId BigInt @db.BigInt
+
+  reason   String   @db.VarChar(512)
+  bannedAt DateTime @default(now())
+  bannedBy BigInt   @db.BigInt
+
+  until                             DateTime
+  discordMagicTimestamp             BigInt   @db.BigInt
+  discordMagicTimestampHostTimezone String   @db.VarChar(255)
+
+  discordGuild Guild @relation(fields: [discordGuildId], references: [discordGuildId])
+
+  @@unique([discordUserId, discordGuildId])
+  @@index([until])
+  @@index([discordGuildId])
+}
+
+// 4. Temporary bans (missing perms)
+// {ToDo} Partitioning this on discordGuildId to accelerate garbage collection?
+// NOTE: https://github.com/prisma/prisma/issues/13407
+model TempBannedMembersMissingPermsToUnban {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+
+  discordUserId  BigInt @db.BigInt
+  discordGuildId BigInt @db.BigInt
+
+  reason   String   @db.VarChar(512)
+  bannedAt DateTime @default(now())
+  bannedBy BigInt   @db.BigInt
+
+  until                             DateTime
+  discordMagicTimestamp             BigInt   @db.BigInt
+  discordMagicTimestampHostTimezone String   @db.VarChar(255)
+
+  discordGuild Guild @relation(fields: [discordGuildId], references: [discordGuildId])
+
+  @@unique([discordUserId, discordGuildId])
+  @@index([until])
+  @@index([discordGuildId])
+}
+
+// 5. Archive of all bans which are passed
+model BannedMembersArchive {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+
+  discordUserId  BigInt @db.BigInt
+  discordGuildId BigInt @db.BigInt
+
+  reason   String   @db.VarChar(512)
+  bannedAt DateTime @default(now())
+  bannedBy BigInt   @db.BigInt
+
+  unbanReason String?  @db.VarChar(1024)
+  unbannedAt  DateTime @default(now())
+
+  until                             DateTime?
+  discordMagicTimestamp             BigInt?   @db.BigInt
+  discordMagicTimestampHostTimezone String?   @db.VarChar(255)
+
+  discordGuild Guild @relation(fields: [discordGuildId], references: [discordGuildId])
+
+  @@index([bannedBy])
+  @@index([discordUserId])
+  @@index([discordGuildId])
+}
+
+model BotGotTimedOutOnGuilds {
+  id BigInt @id @default(autoincrement()) @db.BigInt
+
+  discordGuildId BigInt   @db.BigInt
+  until          DateTime
+
+  @@unique([discordGuildId])
+  @@index([discordGuildId])
+  @@index([until])
+}

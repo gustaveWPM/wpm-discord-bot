@@ -1,0 +1,42 @@
+{
+  "extends": "./tsconfig.commons.json",
+
+  "compilerOptions": {
+    /* https://www.totaltypescript.com/tsconfig-cheat-sheet */
+    "target": "es2022",
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "module": "ESNext",
+    "outDir": "typecheck-dist",
+    "sourceMap": true,
+    "lib": ["es2022"],
+
+    /* From bun */
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
+
+    "noFallthroughCasesInSwitch": true,
+
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+
+    /* Custom */
+    "rootDir": ".",
+    "baseUrl": ".",
+    "incremental": true,
+    "noEmit": false,
+
+    "paths": {
+      "#@/*": ["src/*"],
+      "#𝕃/*": ["src/i18n/*"]
+    }
+  },
+
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+}

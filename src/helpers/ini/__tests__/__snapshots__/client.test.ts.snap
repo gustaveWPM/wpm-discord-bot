@@ -1,0 +1,1006 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Bot initialization should build an initialized client properly 1`] = `
+Client {
+  "_events": {
+    "guildBanAdd": [
+      [Function: AsyncFunction],
+    ],
+    "guildBanRemove": [
+      [Function: guildBanRemoveCallback],
+    ],
+    "guildCreate": [
+      [Function: AsyncFunction],
+    ],
+    "guildDelete": [
+      [Function],
+    ],
+    "guildMemberAdd": [
+      [Function],
+    ],
+    "guildMemberUpdate": [
+      [Function: AsyncFunction],
+    ],
+    "interactionCreate": [
+      [Function: slashCommandCallback],
+    ],
+    "presenceUpdate": [
+      [Function: guildPresenceUpdateCallback],
+    ],
+    "ready": [
+      [Function: onceWrapper],
+    ],
+    "roleUpdate": [
+      [Function: AsyncFunction],
+    ],
+    "shardDisconnect": [
+      [Function],
+    ],
+  },
+  "_eventsCount": 11,
+  "_maxListeners": undefined,
+  "actions": ActionsManager {
+    "ApplicationCommandPermissionsUpdate": ApplicationCommandPermissionsUpdateAction {
+      "client": [Circular],
+    },
+    "AutoModerationActionExecution": AutoModerationActionExecutionAction {
+      "client": [Circular],
+    },
+    "AutoModerationRuleCreate": AutoModerationRuleCreateAction {
+      "client": [Circular],
+    },
+    "AutoModerationRuleDelete": AutoModerationRuleDeleteAction {
+      "client": [Circular],
+    },
+    "AutoModerationRuleUpdate": AutoModerationRuleUpdateAction {
+      "client": [Circular],
+    },
+    "ChannelCreate": ChannelCreateAction {
+      "client": [Circular],
+    },
+    "ChannelDelete": ChannelDeleteAction {
+      "client": [Circular],
+    },
+    "ChannelUpdate": ChannelUpdateAction {
+      "client": [Circular],
+    },
+    "EntitlementCreate": EntitlementCreateAction {
+      "client": [Circular],
+    },
+    "EntitlementDelete": EntitlementDeleteAction {
+      "client": [Circular],
+    },
+    "EntitlementUpdate": EntitlementUpdateAction {
+      "client": [Circular],
+    },
+    "GuildAuditLogEntryCreate": GuildAuditLogEntryCreateAction {
+      "client": [Circular],
+    },
+    "GuildBanAdd": GuildBanAdd {
+      "client": [Circular],
+    },
+    "GuildBanRemove": GuildBanRemove {
+      "client": [Circular],
+    },
+    "GuildChannelsPositionUpdate": GuildChannelsPositionUpdate {
+      "client": [Circular],
+    },
+    "GuildDelete": GuildDeleteAction {
+      "client": [Circular],
+    },
+    "GuildEmojiCreate": GuildEmojiCreateAction {
+      "client": [Circular],
+    },
+    "GuildEmojiDelete": GuildEmojiDeleteAction {
+      "client": [Circular],
+    },
+    "GuildEmojiUpdate": GuildEmojiUpdateAction {
+      "client": [Circular],
+    },
+    "GuildEmojisUpdate": GuildEmojisUpdateAction {
+      "client": [Circular],
+    },
+    "GuildIntegrationsUpdate": GuildIntegrationsUpdate {
+      "client": [Circular],
+    },
+    "GuildMemberRemove": GuildMemberRemoveAction {
+      "client": [Circular],
+    },
+    "GuildMemberUpdate": GuildMemberUpdateAction {
+      "client": [Circular],
+    },
+    "GuildRoleCreate": GuildRoleCreate {
+      "client": [Circular],
+    },
+    "GuildRoleDelete": GuildRoleDeleteAction {
+      "client": [Circular],
+    },
+    "GuildRoleUpdate": GuildRoleUpdateAction {
+      "client": [Circular],
+    },
+    "GuildRolesPositionUpdate": GuildRolesPositionUpdate {
+      "client": [Circular],
+    },
+    "GuildScheduledEventCreate": GuildScheduledEventCreateAction {
+      "client": [Circular],
+    },
+    "GuildScheduledEventDelete": GuildScheduledEventDeleteAction {
+      "client": [Circular],
+    },
+    "GuildScheduledEventUpdate": GuildScheduledEventUpdateAction {
+      "client": [Circular],
+    },
+    "GuildScheduledEventUserAdd": GuildScheduledEventUserAddAction {
+      "client": [Circular],
+    },
+    "GuildScheduledEventUserRemove": GuildScheduledEventUserRemoveAction {
+      "client": [Circular],
+    },
+    "GuildStickerCreate": GuildStickerCreateAction {
+      "client": [Circular],
+    },
+    "GuildStickerDelete": GuildStickerDeleteAction {
+      "client": [Circular],
+    },
+    "GuildStickerUpdate": GuildStickerUpdateAction {
+      "client": [Circular],
+    },
+    "GuildStickersUpdate": GuildStickersUpdateAction {
+      "client": [Circular],
+    },
+    "GuildUpdate": GuildUpdateAction {
+      "client": [Circular],
+    },
+    "InteractionCreate": InteractionCreateAction {
+      "client": [Circular],
+    },
+    "InviteCreate": InviteCreateAction {
+      "client": [Circular],
+    },
+    "InviteDelete": InviteDeleteAction {
+      "client": [Circular],
+    },
+    "MessageCreate": MessageCreateAction {
+      "client": [Circular],
+    },
+    "MessageDelete": MessageDeleteAction {
+      "client": [Circular],
+    },
+    "MessageDeleteBulk": MessageDeleteBulkAction {
+      "client": [Circular],
+    },
+    "MessagePollVoteAdd": MessagePollVoteAddAction {
+      "client": [Circular],
+    },
+    "MessagePollVoteRemove": MessagePollVoteRemoveAction {
+      "client": [Circular],
+    },
+    "MessageReactionAdd": MessageReactionAdd {
+      "client": [Circular],
+    },
+    "MessageReactionRemove": MessageReactionRemove {
+      "client": [Circular],
+    },
+    "MessageReactionRemoveAll": MessageReactionRemoveAll {
+      "client": [Circular],
+    },
+    "MessageReactionRemoveEmoji": MessageReactionRemoveEmoji {
+      "client": [Circular],
+    },
+    "MessageUpdate": MessageUpdateAction {
+      "client": [Circular],
+    },
+    "PresenceUpdate": PresenceUpdateAction {
+      "client": [Circular],
+    },
+    "StageInstanceCreate": StageInstanceCreateAction {
+      "client": [Circular],
+    },
+    "StageInstanceDelete": StageInstanceDeleteAction {
+      "client": [Circular],
+    },
+    "StageInstanceUpdate": StageInstanceUpdateAction {
+      "client": [Circular],
+    },
+    "ThreadCreate": ThreadCreateAction {
+      "client": [Circular],
+    },
+    "ThreadDelete": ThreadDeleteAction {
+      "client": [Circular],
+    },
+    "ThreadListSync": ThreadListSyncAction {
+      "client": [Circular],
+    },
+    "ThreadMemberUpdate": ThreadMemberUpdateAction {
+      "client": [Circular],
+    },
+    "ThreadMembersUpdate": ThreadMembersUpdateAction {
+      "client": [Circular],
+    },
+    "TypingStart": TypingStart {
+      "client": [Circular],
+    },
+    "UserUpdate": UserUpdateAction {
+      "client": [Circular],
+    },
+    "VoiceStateUpdate": VoiceStateUpdate {
+      "client": [Circular],
+    },
+    "WebhooksUpdate": WebhooksUpdate {
+      "client": [Circular],
+    },
+    "client": [Circular],
+    "injectedChannel": Symbol(djs.actions.injectedChannel),
+    "injectedMessage": Symbol(djs.actions.injectedMessage),
+    "injectedUser": Symbol(djs.actions.injectedUser),
+  },
+  "application": null,
+  "channels": ChannelManager {
+    "_cache": Map {},
+    "client": [Circular],
+    "holds": [class BaseChannel],
+  },
+  "commands": 
+Map {
+    "config" => {
+      "data": MixedClass {
+        "default_member_permissions": "32",
+        "default_permission": undefined,
+        "description": "TBD",
+        "description_localizations": {
+          "en-US": "TBD",
+          "fr": "TBD",
+        },
+        "dm_permission": false,
+        "name": "config",
+        "name_localizations": {
+          "en-US": "config",
+          "fr": "config",
+        },
+        "nsfw": false,
+        "options": [
+          MixedClass {
+            "description": "Choose an invitation link and a role to reward members who share it.",
+            "description_localizations": {
+              "en-US": "Choose an invitation link and a role to reward members who share it.",
+              "fr": "Choisir un lien d'invitation et un rôle pour récompenser les membres qui le partagent",
+            },
+            "name": "vanity",
+            "name_localizations": {
+              "en-US": "vanity",
+              "fr": "vanity",
+            },
+            "options": [
+              MixedClass {
+                "autocomplete": undefined,
+                "choices": undefined,
+                "description": "Custom invite link (discord.gg/example)",
+                "description_localizations": {
+                  "en-US": "Custom invite link (discord.gg/example)",
+                  "fr": "Lien d'invitation personnalisé (discord.gg/exemple)",
+                },
+                "max_length": 255,
+                "min_length": undefined,
+                "name": "vanity",
+                "name_localizations": {
+                  "en-US": "vanity",
+                  "fr": "vanity",
+                },
+                "required": true,
+                "type": 3,
+              },
+              SlashCommandRoleOption {
+                "description": "Role to give to the members sharing the vanity link in their status",
+                "description_localizations": {
+                  "en-US": "Role to give to the members sharing the vanity link in their status",
+                  "fr": "Rôle à offrir aux membres qui partagent le lien d'invitation dans leur statut",
+                },
+                "name": "role",
+                "name_localizations": {
+                  "en-US": "role",
+                  "fr": "rôle",
+                },
+                "required": true,
+                "type": 8,
+              },
+            ],
+          },
+        ],
+      },
+      "execute": [Function: AsyncFunction],
+    },
+    "greet" => {
+      "data": MixedClass {
+        "default_member_permissions": "32",
+        "default_permission": undefined,
+        "description": "Lorem ipsum dolor sit amet - TBD",
+        "description_localizations": {
+          "en-US": "Lorem ipsum dolor sit amet - TBD",
+          "fr": "Lorem ipsum dolor sit amet - TBD",
+        },
+        "dm_permission": false,
+        "name": "greet",
+        "name_localizations": {
+          "en-US": "greet",
+          "fr": "greet",
+        },
+        "nsfw": false,
+        "options": [
+          MixedClass {
+            "description": "Lorem ipsum dolor sit amet - TBD",
+            "description_localizations": {
+              "en-US": "Lorem ipsum dolor sit amet - TBD",
+              "fr": "Lorem ipsum dolor sit amet - TBD",
+            },
+            "name": "toggle",
+            "name_localizations": {
+              "en-US": "toggle",
+              "fr": "on-off",
+            },
+            "options": [
+              MixedClass {
+                "channel_types": [
+                  10,
+                  11,
+                  12,
+                  5,
+                  15,
+                  2,
+                  13,
+                  0,
+                ],
+                "description": "Lorem ipsum dolor sit amet - TBD",
+                "description_localizations": {
+                  "en-US": "Lorem ipsum dolor sit amet - TBD",
+                  "fr": "Lorem ipsum dolor sit amet - TBD",
+                },
+                "name": "channel",
+                "name_localizations": {
+                  "en-US": "channel",
+                  "fr": "salon",
+                },
+                "required": false,
+                "type": 7,
+              },
+            ],
+          },
+          MixedClass {
+            "description": "Lorem ipsum dolor sit amet - TBD",
+            "description_localizations": {
+              "en-US": "Lorem ipsum dolor sit amet - TBD",
+              "fr": "Lorem ipsum dolor sit amet - TBD",
+            },
+            "name": "infos",
+            "name_localizations": {
+              "en-US": "infos",
+              "fr": "infos",
+            },
+            "options": [],
+          },
+        ],
+      },
+      "execute": [Function: AsyncFunction],
+    },
+    "ping" => {
+      "data": MixedClass {
+        "default_member_permissions": "8",
+        "default_permission": undefined,
+        "description": "Bot latency (ms).",
+        "description_localizations": {
+          "en-US": "Bot latency (ms).",
+          "fr": "Retourne la latence du bot en ms.",
+        },
+        "dm_permission": true,
+        "name": "ping",
+        "name_localizations": {
+          "en-US": "ping",
+          "fr": "ping",
+        },
+        "nsfw": false,
+        "options": [
+          MixedClass {
+            "autocomplete": undefined,
+            "choices": [
+              {
+                "name": "useless",
+                "name_localizations": {
+                  "en-US": "useless",
+                  "fr": "sert à rien",
+                },
+                "value": "useless",
+              },
+              {
+                "name": "useless",
+                "name_localizations": {
+                  "en-US": "useless",
+                  "fr": "sert à rien",
+                },
+                "value": "useless-too",
+              },
+            ],
+            "description": "useless",
+            "description_localizations": {
+              "en-US": "useless",
+              "fr": "sert à rien",
+            },
+            "max_length": undefined,
+            "min_length": undefined,
+            "name": "useless-choice",
+            "name_localizations": {
+              "en-US": "useless-choice",
+              "fr": "choix-qui-sert-a-rien",
+            },
+            "required": false,
+            "type": 3,
+          },
+        ],
+      },
+      "execute": [Function: AsyncFunction],
+    },
+    "help" => {
+      "data": MixedClass {
+        "default_member_permissions": undefined,
+        "default_permission": undefined,
+        "description": "Display all commands",
+        "description_localizations": {
+          "en-US": "Display all commands",
+          "fr": "Affiche la liste des commandes",
+        },
+        "dm_permission": true,
+        "name": "help",
+        "name_localizations": {
+          "en-US": "help",
+          "fr": "aide",
+        },
+        "nsfw": false,
+        "options": [],
+      },
+      "execute": [Function: AsyncFunction],
+    },
+    "warn" => {
+      "data": MixedClass {
+        "default_member_permissions": "1099511627776",
+        "default_permission": undefined,
+        "description": "Warn a member",
+        "description_localizations": {
+          "en-US": "Warn a member",
+          "fr": "Ajoute un avertissement à un membre",
+        },
+        "dm_permission": false,
+        "name": "warn",
+        "name_localizations": {
+          "en-US": "warn",
+          "fr": "avertir",
+        },
+        "nsfw": false,
+        "options": [
+          SlashCommandUserOption {
+            "description": "Discord ID or ping of the member",
+            "description_localizations": {
+              "en-US": "Discord ID or ping of the member",
+              "fr": "ID Discord ou mention du membre",
+            },
+            "name": "member",
+            "name_localizations": {
+              "en-US": "member",
+              "fr": "membre",
+            },
+            "required": true,
+            "type": 6,
+          },
+          MixedClass {
+            "autocomplete": undefined,
+            "choices": undefined,
+            "description": "Warn reason",
+            "description_localizations": {
+              "en-US": "Warn reason",
+              "fr": "Raison de l'avertissement",
+            },
+            "max_length": 1024,
+            "min_length": undefined,
+            "name": "reason",
+            "name_localizations": {
+              "en-US": "reason",
+              "fr": "raison",
+            },
+            "required": false,
+            "type": 3,
+          },
+        ],
+      },
+      "execute": [Function: AsyncFunction],
+    },
+    "mute" => {
+      "data": MixedClass {
+        "default_member_permissions": "1099511627776",
+        "default_permission": undefined,
+        "description": "Mute a member, using Discord “Timeout” feature",
+        "description_localizations": {
+          "en-US": "Mute a member, using Discord “Timeout” feature",
+          "fr": "Mute un membre en utilisant la fonctionnalité « Exclure » de Discord",
+        },
+        "dm_permission": false,
+        "name": "mute",
+        "name_localizations": {
+          "en-US": "mute",
+          "fr": "mute",
+        },
+        "nsfw": false,
+        "options": [
+          SlashCommandUserOption {
+            "description": "Discord ID or ping of the member",
+            "description_localizations": {
+              "en-US": "Discord ID or ping of the member",
+              "fr": "ID Discord ou mention du membre",
+            },
+            "name": "member",
+            "name_localizations": {
+              "en-US": "member",
+              "fr": "membre",
+            },
+            "required": true,
+            "type": 6,
+          },
+          MixedClass {
+            "autocomplete": undefined,
+            "choices": undefined,
+            "description": "Mute duration (minimum: 5s, maximum: 28d)",
+            "description_localizations": {
+              "en-US": "Mute duration (minimum: 5s, maximum: 28d)",
+              "fr": "Durée du mute (minimum 5s, maximum 28d)",
+            },
+            "max_length": 30,
+            "min_length": undefined,
+            "name": "duration",
+            "name_localizations": {
+              "en-US": "duration",
+              "fr": "durée",
+            },
+            "required": true,
+            "type": 3,
+          },
+          MixedClass {
+            "autocomplete": undefined,
+            "choices": undefined,
+            "description": "Mute reason",
+            "description_localizations": {
+              "en-US": "Mute reason",
+              "fr": "Raison du mute",
+            },
+            "max_length": 512,
+            "min_length": undefined,
+            "name": "reason",
+            "name_localizations": {
+              "en-US": "reason",
+              "fr": "raison",
+            },
+            "required": false,
+            "type": 3,
+          },
+        ],
+      },
+      "execute": [Function: AsyncFunction],
+    },
+    "kick" => {
+      "data": MixedClass {
+        "default_member_permissions": "2",
+        "default_permission": undefined,
+        "description": "Kick a member",
+        "description_localizations": {
+          "en-US": "Kick a member",
+          "fr": "Expulse un membre",
+        },
+        "dm_permission": false,
+        "name": "kick",
+        "name_localizations": {
+          "en-US": "kick",
+          "fr": "expulser",
+        },
+        "nsfw": false,
+        "options": [
+          SlashCommandUserOption {
+            "description": "Discord ID or ping of the member",
+            "description_localizations": {
+              "en-US": "Discord ID or ping of the member",
+              "fr": "ID Discord ou mention du membre",
+            },
+            "name": "member",
+            "name_localizations": {
+              "en-US": "member",
+              "fr": "membre",
+            },
+            "required": true,
+            "type": 6,
+          },
+          MixedClass {
+            "autocomplete": undefined,
+            "choices": undefined,
+            "description": "Kick reason",
+            "description_localizations": {
+              "en-US": "Kick reason",
+              "fr": "Raison de l'expulsion",
+            },
+            "max_length": 512,
+            "min_length": undefined,
+            "name": "reason",
+            "name_localizations": {
+              "en-US": "reason",
+              "fr": "raison",
+            },
+            "required": false,
+            "type": 3,
+          },
+        ],
+      },
+      "execute": [Function: AsyncFunction],
+    },
+    "ban" => {
+      "data": MixedClass {
+        "default_member_permissions": "4",
+        "default_permission": undefined,
+        "description": "Ban a member",
+        "description_localizations": {
+          "en-US": "Ban a member",
+          "fr": "Bannit un membre",
+        },
+        "dm_permission": false,
+        "name": "ban",
+        "name_localizations": {
+          "en-US": "ban",
+          "fr": "bannir",
+        },
+        "nsfw": false,
+        "options": [
+          SlashCommandUserOption {
+            "description": "Discord ID or ping of the user",
+            "description_localizations": {
+              "en-US": "Discord ID or ping of the user",
+              "fr": "ID Discord ou mention de l'utilisateur",
+            },
+            "name": "user",
+            "name_localizations": {
+              "en-US": "user",
+              "fr": "utilisateur",
+            },
+            "required": true,
+            "type": 6,
+          },
+          MixedClass {
+            "autocomplete": undefined,
+            "choices": undefined,
+            "description": "Ban duration (minimum: 1d, maximum: 100y)",
+            "description_localizations": {
+              "en-US": "Ban duration (minimum: 1d, maximum: 100y)",
+              "fr": "Durée du bannissement (minimum 1d, maximum 100y)",
+            },
+            "max_length": 30,
+            "min_length": undefined,
+            "name": "duration",
+            "name_localizations": {
+              "en-US": "duration",
+              "fr": "durée",
+            },
+            "required": false,
+            "type": 3,
+          },
+          MixedClass {
+            "autocomplete": undefined,
+            "choices": undefined,
+            "description": "Ban reason",
+            "description_localizations": {
+              "en-US": "Ban reason",
+              "fr": "Raison du bannissement",
+            },
+            "max_length": 512,
+            "min_length": undefined,
+            "name": "reason",
+            "name_localizations": {
+              "en-US": "reason",
+              "fr": "raison",
+            },
+            "required": false,
+            "type": 3,
+          },
+          MixedClass {
+            "autocomplete": undefined,
+            "choices": undefined,
+            "description": "Deletes the messages history of the banned user (minimum: 1m, maximum: 7d)",
+            "description_localizations": {
+              "en-US": "Deletes the messages history of the banned user (minimum: 1m, maximum: 7d)",
+              "fr": "Supprime l'historique des messages de l'utilisateur banni (minimum 1m, maximum 7d)",
+            },
+            "max_length": 30,
+            "min_length": undefined,
+            "name": "delete-messages",
+            "name_localizations": {
+              "en-US": "delete-messages",
+              "fr": "supprimer-messages",
+            },
+            "required": false,
+            "type": 3,
+          },
+        ],
+      },
+      "execute": [Function: AsyncFunction],
+    },
+  }
+,
+  "emit": [Function: emit2],
+  "guilds": GuildManager {
+    "_cache": Map {},
+    "client": [Circular],
+    "holds": [class Guild],
+  },
+  [Symbol(kCapture)]: true,
+  "options": {
+    "closeTimeout": 5000,
+    "failIfNotExists": true,
+    "intents": IntentsBitField {
+      "bitfield": 3276799,
+    },
+    "jsonTransformer": [Function],
+    "makeCache": [Function],
+    "partials": [
+      2,
+      5,
+      6,
+    ],
+    "presence": {
+      "status": "online",
+      "user": {
+        "id": null,
+      },
+    },
+    "rest": {
+      "agent": null,
+      "api": "https://discord.com/api",
+      "authPrefix": "Bot",
+      "cdn": "https://cdn.discordapp.com",
+      "globalRequestsPerSecond": 50,
+      "handlerSweepInterval": 3600000,
+      "hashLifetime": 86400000,
+      "hashSweepInterval": 14400000,
+      "headers": {},
+      "invalidRequestWarningInterval": 0,
+      "makeRequest": [Function: AsyncFunction],
+      "offset": 50,
+      "rejectOnRateLimit": null,
+      "retries": 3,
+      "timeout": 15000,
+      "version": "10",
+    },
+    "shardCount": 1,
+    "shards": [
+      0,
+    ],
+    "sweepers": {
+      "threads": {
+        "interval": 3600,
+        "lifetime": 14400,
+      },
+    },
+    "waitGuildTimeout": 15000,
+    "ws": {
+      "large_threshold": 50,
+      "version": 10,
+    },
+  },
+  "presence": ClientPresence {
+    "activities": [],
+    "client": [Circular],
+    "clientStatus": null,
+    "guild": null,
+    "status": "online",
+    "userId": null,
+  },
+  "readyTimestamp": null,
+  "rest": _REST {
+    "_eventCount": 0,
+    "_events": {},
+    "_internalPromiseMap": Map {},
+    "_maxListeners": 10,
+    "_wrapperId": 0n,
+    "agent": null,
+    "cdn": CDN {
+      "base": "https://cdn.discordapp.com",
+    },
+    "globalDelay": null,
+    "globalRemaining": 50,
+    "globalReset": -1,
+    "handlers": Map {},
+    "hashes": Map {},
+    "options": {
+      "agent": null,
+      "api": "https://discord.com/api",
+      "authPrefix": "Bot",
+      "cdn": "https://cdn.discordapp.com",
+      "globalRequestsPerSecond": 50,
+      "handlerSweepInterval": 3600000,
+      "hashLifetime": 86400000,
+      "hashSweepInterval": 14400000,
+      "headers": {},
+      "invalidRequestWarningInterval": 0,
+      "makeRequest": [Function: AsyncFunction],
+      "offset": 50,
+      "rejectOnRateLimit": null,
+      "retries": 3,
+      "timeout": 15000,
+      "version": "10",
+    },
+  },
+  "shard": null,
+  "sweepers": Sweepers {
+    "client": [Circular],
+    "intervals": {
+      "applicationCommands": null,
+      "autoModerationRules": null,
+      "bans": null,
+      "emojis": null,
+      "entitlements": null,
+      "guildMembers": null,
+      "invites": null,
+      "messages": null,
+      "presences": null,
+      "reactions": null,
+      "stageInstances": null,
+      "stickers": null,
+      "threadMembers": null,
+      "users": null,
+      "voiceStates": null,
+    },
+    "options": {
+      "threads": {
+        "interval": 3600,
+        "lifetime": 14400,
+      },
+    },
+  },
+  "token": null,
+  "user": null,
+  "users": UserManager {
+    "_cache": Map {},
+    "client": [Circular],
+    "holds": [class User],
+  },
+  "voice": ClientVoiceManager {
+    "adapters": Map {},
+    "client": [Circular],
+  },
+  "ws": WebSocketManager {
+    "_events": {},
+    "_eventsCount": 0,
+    "_maxListeners": undefined,
+    "_ws": null,
+    "client": [Circular],
+    "destroyed": false,
+    "gateway": null,
+    [Symbol(kCapture)]: false,
+    "packetQueue": [],
+    "shards": Map {},
+    "status": 3,
+  },
+}
+`;
+
+exports[`Bot initialization should build an initialized client properly 2`] = `
+"{
+  "options": {
+    "closeTimeout": 5000,
+    "waitGuildTimeout": 15000,
+    "shardCount": 1,
+    "partials": [
+      2,
+      5,
+      6
+    ],
+    "failIfNotExists": true,
+    "presence": {
+      "status": "online",
+      "user": {
+        "id": null
+      }
+    },
+    "sweepers": {
+      "threads": {
+        "interval": 3600,
+        "lifetime": 14400
+      }
+    },
+    "ws": {
+      "large_threshold": 50,
+      "version": 10
+    },
+    "rest": {
+      "agent": null,
+      "api": "https://discord.com/api",
+      "authPrefix": "Bot",
+      "cdn": "https://cdn.discordapp.com",
+      "headers": {},
+      "invalidRequestWarningInterval": 0,
+      "globalRequestsPerSecond": 50,
+      "offset": 50,
+      "rejectOnRateLimit": null,
+      "retries": 3,
+      "timeout": 15000,
+      "version": "10",
+      "hashSweepInterval": 14400000,
+      "hashLifetime": 86400000,
+      "handlerSweepInterval": 3600000
+    },
+    "intents": 3276799,
+    "shards": [
+      0
+    ]
+  },
+  "rest": {
+    "agent": null,
+    "cdn": {
+      "base": "https://cdn.discordapp.com"
+    },
+    "globalRemaining": 50,
+    "globalDelay": null,
+    "globalReset": -1,
+    "hashes": [],
+    "handlers": [],
+    "options": {
+      "agent": null,
+      "api": "https://discord.com/api",
+      "authPrefix": "Bot",
+      "cdn": "https://cdn.discordapp.com",
+      "headers": {},
+      "invalidRequestWarningInterval": 0,
+      "globalRequestsPerSecond": 50,
+      "offset": 50,
+      "rejectOnRateLimit": null,
+      "retries": 3,
+      "timeout": 15000,
+      "version": "10",
+      "hashSweepInterval": 14400000,
+      "hashLifetime": 86400000,
+      "handlerSweepInterval": 3600000
+    }
+  },
+  "ws": {
+    "gateway": null,
+    "shards": [],
+    "status": 3,
+    "destroyed": false
+  },
+  "voice": {
+    "adapters": {}
+  },
+  "shard": null,
+  "users": [],
+  "guilds": [],
+  "channels": [],
+  "sweepers": {
+    "options": {
+      "threads": {
+        "interval": 3600,
+        "lifetime": 14400
+      }
+    },
+    "intervals": {
+      "autoModerationRules": null,
+      "applicationCommands": null,
+      "bans": null,
+      "emojis": null,
+      "entitlements": null,
+      "invites": null,
+      "guildMembers": null,
+      "messages": null,
+      "presences": null,
+      "reactions": null,
+      "stageInstances": null,
+      "stickers": null,
+      "threadMembers": null,
+      "users": null,
+      "voiceStates": null
+    }
+  },
+  "user": null,
+  "application": null,
+  "readyTimestamp": null,
+  "commands": {}
+}"
+`;

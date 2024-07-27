@@ -1,0 +1,226 @@
+{
+  "private": true,
+  "name": "discord-bot",
+  "version": "0.1.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "author": "GustaveWPM",
+  "module": "main.ts",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "wipe-wireit": "make wipe-wireit",
+    "codegen": "wireit",
+    "typesafe-i18n": "wireit",
+    "build": "wireit",
+    "fast-build": "wireit",
+    "start": "wireit",
+    "test": "wireit",
+    "lint": "wireit",
+    "ts-prune": "wireit",
+    "ts-prune-verbose": "wireit",
+    "typecheck": "wireit",
+    "typecheck-tests": "wireit",
+    "clean:dist": "wireit",
+    "format": "prettier --log-level warn --write .",
+    "commit": "git-cz",
+    "ci:format-check": "wireit",
+    "prepare": "is-ci || husky"
+  },
+  "devDependencies": {
+    "@wpm-discord-bot/shared-lib": "*",
+    "@wpm-discord-bot/shared-specs": "*",
+    "@wpm-discord-bot/shared-types": "*",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@commitlint/cz-commitlint": "^19.2.0",
+    "@commitlint/types": "^19.0.3",
+    "@types/bun": "latest",
+    "@types/clone-deep": "^4.0.4",
+    "@types/eslint": "^8.56.10",
+    "@types/node": "^20.14.9",
+    "@types/uuid": "^10.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
+    "commitizen": "^4.3.0",
+    "editorconfig": "^2.0.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-only-error": "^1.0.2",
+    "eslint-plugin-perfectionist": "^2.11.0",
+    "eslint-plugin-promise": "^6.4.0",
+    "eslint-plugin-unused-imports": "^4.0.0",
+    "husky": "^9.0.11",
+    "inquirer": "^10.0.1",
+    "lint-staged": "^15.2.7",
+    "prettier": "^3.3.2",
+    "prisma": "5.17.0",
+    "rimraf": "^6.0.1",
+    "ts-prune": "0.10.3",
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "@prisma/client": "5.17.0",
+    "@verrou/core": "^0.5.0",
+    "bentocache": "^1.0.0-beta.9",
+    "clone-deep": "^4.0.1",
+    "discord.js": "^14.15.3",
+    "ioredis": "^5.4.1",
+    "is-ci": "^3.0.1",
+    "p-debounce": "^4.0.0",
+    "pm2": "^5.4.1",
+    "toad-scheduler": "^3.0.1",
+    "typesafe-i18n": "5.26.2",
+    "uuid": "^10.0.0",
+    "valibot": "^0.36.0",
+    "wireit": "^0.14.4"
+  },
+  "engines": {
+    "bun": "1.1.x"
+  },
+  "wireit": {
+    "ci:format-check": {
+      "command": "prettier . --check",
+      "files": [
+        "*.{js,ts,jsx,tsx,json,md,mdx,html,css,scss,yml,yaml}"
+      ],
+      "output": []
+    },
+    "clean:dist": {
+      "command": "rimraf dist",
+      "files": [
+        "dist/"
+      ],
+      "output": []
+    },
+    "typesafe-i18n": {
+      "command": "typesafe-i18n --no-watch",
+      "files": [
+        "src/i18n/typesafe-i18n/**/*.*"
+      ],
+      "output": []
+    },
+    "codegen": {
+      "dependencies": [
+        "typesafe-i18n"
+      ]
+    },
+    "prebuild": {
+      "files": [
+        "src/**/*.*",
+        "package.json",
+        "packages/**/*.*",
+        "packages/**/package.json"
+      ],
+      "dependencies": [
+        "clean:dist",
+        "codegen",
+        "lint",
+        "typecheck",
+        "typecheck-tests"
+      ]
+    },
+    "start": {
+      "command": "bun run ./dist/main",
+      "service": true,
+      "dependencies": []
+    },
+    "build": {
+      "command": "bun build ./src/main.ts --outdir ./dist --minify-whitespace --minify-syntax --target bun",
+      "files": [
+        "src/**/*.*",
+        "packages/**/*.*"
+      ],
+      "dependencies": [
+        "prebuild"
+      ],
+      "output": [
+        "dist/"
+      ],
+      "packageLocks": [
+        "bun.lockb"
+      ]
+    },
+    "fast-build": {
+      "command": "bun build ./src/main.ts --outdir ./dist --minify-whitespace --minify-syntax --target bun",
+      "files": [
+        "src/**/*.*",
+        "package.json",
+        "packages/**/*.*",
+        "packages/**/package.json"
+      ],
+      "dependencies": [
+        "clean:dist",
+        "codegen"
+      ],
+      "output": [
+        "dist/"
+      ],
+      "packageLocks": [
+        "bun.lockb"
+      ]
+    },
+    "ts-prune-verbose": {
+      "command": "ts-prune --ignore \"(dist|typecheck-dist)\" | python3 .ts-prune/sanitize.py",
+      "files": [
+        "**/*.ts",
+        "**/tsprune-false-positives.conf"
+      ],
+      "output": []
+    },
+    "ts-prune": {
+      "command": "ts-prune --ignore \"(dist|typecheck-dist)\" | python3 .ts-prune/sanitize.py --quiet",
+      "files": [
+        "**/*.ts",
+        "**/tsprune-false-positives.conf"
+      ],
+      "output": []
+    },
+    "lint": {
+      "command": "eslint \"./{src,packages}/**/*.{js,jsx,ts,tsx}\" --max-warnings 0 --cache",
+      "files": [
+        "src/**/*.*",
+        "packages/**/*.*",
+        ".eslintignore",
+        ".eslintrc.cjs"
+      ],
+      "output": []
+    },
+    "test": {
+      "command": "bun test",
+      "files": [
+        "src/**/*.*",
+        "packages/**/*.*",
+        "**/*.test.ts",
+        "**/*.test.ts.snap"
+      ],
+      "dependencies": [
+        "codegen"
+      ],
+      "output": []
+    },
+    "typecheck": {
+      "command": "tsc --build --pretty tsconfig.typecheck.json",
+      "dependencies": [
+        "codegen"
+      ],
+      "files": [
+        "src/**/*.*",
+        "tsconfig.commons.json",
+        "tsconfig.typecheck.json"
+      ],
+      "output": [
+        "typecheck-dist/"
+      ]
+    },
+    "typecheck-tests": {
+      "command": "tsc --noEmit --skipLibCheck --pretty --project tsconfig.typecheck-tests.json",
+      "files": [
+        "**/*.test.ts",
+        "**/*.test.ts.snap",
+        "tsconfig.typecheck-tests.json"
+      ],
+      "output": []
+    }
+  }
+}

@@ -1,0 +1,22 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`I18n interpolators (embeds > kickCommand) kicksAmount > 0 1`] = `
+[
+  "You've been kicked 0 times.",
+  "Vous avez été exclus 0 fois.",
+]
+`;
+
+exports[`I18n interpolators (embeds > kickCommand) kicksAmount > singular 1`] = `
+[
+  "You've been kicked 1 time.",
+  "Vous avez été exclus 1 fois.",
+]
+`;
+
+exports[`I18n interpolators (embeds > kickCommand) kicksAmount > plural 1`] = `
+[
+  "You've been kicked 2 times.",
+  "Vous avez été exclus 2 fois.",
+]
+`;

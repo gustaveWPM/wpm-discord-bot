@@ -1,0 +1,211 @@
+services:
+  # § D. Redis
+  bot_app_redis:
+    container_name: wpm-discord-bot-redis
+    image: docker.dragonflydb.io/dragonflydb/dragonfly:v1.19.0
+    restart: always
+    ulimits:
+      memlock: -1
+    ports:
+      - '127.0.0.1:6379:${BOT_APP_REDIS_PORT}'
+    volumes:
+      - redis-data:/data
+    networks:
+      - bot_app_shared_network
+    healthcheck:
+      start_period: 10s
+      interval: 5s
+      timeout: 5s
+      retries: 7
+      test: ['CMD', 'redis-cli', 'ping']
+
+  # § C. Dozzle
+  dozzle:
+    container_name: wpm-discord-bot-dozzle
+    image: amir20/dozzle:v7.0.7
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./docker/dozzle/data:/data
+    ports:
+      - 49152:8080
+    environment:
+      DOZZLE_AUTH_PROVIDER: simple
+
+  # § B. NextCloud
+  # B. 1. App - NextCloud
+  nextcloud_app:
+    container_name: wpm-discord-bot-nextcloud-app
+    image: nextcloud
+    restart: always
+    ports:
+      - 49153:80
+    links:
+      - nextcloud_db
+    volumes:
+      - nextcloud:/var/www/html
+      - bot_app_and_nextcloud_shared_traces:/mnt/discord-bot-traces
+    environment:
+      MYSQL_PASSWORD: ${NEXTCLOUD_MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${NEXTCLOUD_MYSQL_DATABASE}
+      MYSQL_USER: ${NEXTCLOUD_MYSQL_USER}
+      MYSQL_HOST: nextcloud_db
+
+    depends_on:
+      nextcloud_db:
+        condition: service_healthy
+
+  # B. 2. MariaDB - NextCloud
+  nextcloud_db:
+    container_name: wpm-discord-bot-nextcloud-db
+    image: mariadb:10.6
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
+    volumes:
+      - nextcloud_db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${NEXTCLOUD_MYSQL_ROOT_PASSWORD}
+      MYSQL_PASSWORD: ${NEXTCLOUD_MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${NEXTCLOUD_MYSQL_DATABASE}
+      MYSQL_USER: ${NEXTCLOUD_MYSQL_USER}
+
+    # * ... https://mariadb.com/kb/en/using-healthcheck-sh/
+    healthcheck:
+      start_period: 10s
+      interval: 5s
+      timeout: 5s
+      retries: 7
+      test: ['CMD', 'healthcheck.sh', '--su-mysql', '--connect', '--innodb_initialized']
+
+  # § A. Bot App
+  # A. 1. Bun - Bot App
+  bot_app:
+    container_name: wpm-discord-bot-bot-app
+    build:
+      context: .
+      dockerfile: Dockerfile.bot-app
+    restart: always
+
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN}
+      CLIENT_ID: ${CLIENT_ID}
+      DEV_GUILD_ID: ${DEV_GUILD_ID}
+      BOT_APP_DATABASE_URL: ${BOT_APP_DATABASE_URL}
+
+    ports:
+      - '3000:3000'
+    volumes:
+      - bot_app_and_nextcloud_shared_traces:/bot-app/traces
+    networks:
+      - bot_app_shared_network
+
+    depends_on:
+      bot_app_db:
+        condition: service_healthy
+      bot_app_redis:
+        condition: service_healthy
+
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./src
+          target: /bot-app/src
+          ignore:
+            - .env
+            - .env.test
+
+        - action: sync+restart
+          path: ./packages
+          target: /bot-app/packages
+          ignore:
+            - .env
+            - .env.test
+
+        - action: rebuild
+          path: ./prisma/schema.prisma
+
+        - action: rebuild
+          path: ./docker-compose.yml
+
+        - action: rebuild
+          path: ./Makefile
+
+        - action: rebuild
+          path: ./docker/utils/cron.sh
+
+        - action: rebuild
+          path: ./pm2.config.cjs
+
+        - action: rebuild
+          path: ./package.json
+
+        - action: rebuild
+          path: ./packages/shared-lib/package.json
+
+        - action: rebuild
+          path: ./packages/shared-specs/package.json
+
+        - action: rebuild
+          path: ./packages/shared-types/package.json
+
+  # A. 2. PG Admin - Bot App
+  bot_app_pgadmin:
+    container_name: wpm-discord-bot-bot-app-pgadmin
+    image: dpage/pgadmin4:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${BOT_APP_PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${BOT_APP_PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - '49154:80'
+    networks:
+      - bot_app_shared_network
+    depends_on:
+      bot_app_db:
+        condition: service_healthy
+
+  # A. 3. Postgres (TEST DB) - Bot App
+  # ... NOT USED YET
+
+  # A. 4. Postgres - Bot App
+  bot_app_db:
+    container_name: wpm-discord-bot-bot-app-db
+    image: postgres:16.3
+    restart: always
+
+    environment:
+      POSTGRES_USER: ${BOT_APP_POSTGRES_USER}
+      PGUSER: ${BOT_APP_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${BOT_APP_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${BOT_APP_POSTGRES_DB}
+
+    ports:
+      - '127.0.0.1:5432:5432'
+    volumes:
+      - bot_app_pg_data:/var/lib/postgresql/data
+    networks:
+      - bot_app_shared_network
+
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -d ${BOT_APP_POSTGRES_DB} -U ${BOT_APP_POSTGRES_USER}']
+      start_period: 10s
+      interval: 5s
+      timeout: 5s
+      retries: 7
+
+volumes:
+  redis-data:
+  bot_app_pg_data:
+  test_bot_app_pg_data:
+  nextcloud:
+  nextcloud_db:
+  bot_app_and_nextcloud_shared_traces:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./traces
+
+networks:
+  bot_app_shared_network:
+    driver: bridge

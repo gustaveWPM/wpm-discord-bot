@@ -1,0 +1,71 @@
+{
+  "private": true,
+  "name": "@wpm-discord-bot/shared-types",
+  "version": "0.0.0",
+  "description": "types",
+  "files": [
+    "src"
+  ],
+  "exports": {
+    "./Boolean": "./src/Boolean.ts",
+    "./BotClient": "./src/BotClient.ts",
+    "./BotI18n": "./src/BotI18n.ts",
+    "./BotI18nSchema": "./src/BotI18nSchema.ts",
+    "./Channels": "./src/Channels.ts",
+    "./Database": "./src/Database.ts",
+    "./Interaction": "./src/Interaction.ts",
+    "./JSON": "./src/JSON.ts",
+    "./Number": "./src/Number.ts",
+    "./Permissions": "./src/Permissions.ts",
+    "./SelectMenu": "./src/SelectMenu.ts",
+    "./SlashCommand": "./src/SlashCommand.ts",
+    "./String": "./src/String.ts",
+    "./Utils": "./src/Utils.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "Boolean": [
+        "./src/Boolean.ts"
+      ],
+      "BotClient": [
+        "./src/BotClient.ts"
+      ],
+      "BotI18n": [
+        "./src/BotI18n.ts"
+      ],
+      "BotI18nSchema": [
+        "./src/BotI18nSchema.ts"
+      ],
+      "Channels": [
+        "./src/Channels.ts"
+      ],
+      "Database": [
+        "./src/Database.ts"
+      ],
+      "Interaction": [
+        "./src/Interaction.ts"
+      ],
+      "JSON": [
+        "./src/JSON.ts"
+      ],
+      "Number": [
+        "./src/Number.ts"
+      ],
+      "Permissions": [
+        "./src/Permissions.ts"
+      ],
+      "SelectMenu": [
+        "./src/SelectMenu.ts"
+      ],
+      "SlashCommand": [
+        "./src/SlashCommand.ts"
+      ],
+      "String": [
+        "./src/String.ts"
+      ],
+      "Utils": [
+        "./src/Utils.ts"
+      ]
+    }
+  }
+}

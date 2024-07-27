@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+bun ts-prune
+bun codegen
+git add src/i18n/typesafe-i18n
+bun run test
+bunx lint-staged

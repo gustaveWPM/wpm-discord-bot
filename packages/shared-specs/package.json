@@ -1,0 +1,38 @@
+{
+  "private": true,
+  "name": "@wpm-discord-bot/shared-specs",
+  "version": "0.0.0",
+  "description": "specs",
+  "files": [
+    "src"
+  ],
+  "exports": {
+    "./BotAppHardCodedStaticContext": "./src/BotAppHardCodedStaticContext.ts",
+    "./Discord": "./src/Discord.ts",
+    "./ECanModerateThisUser": "./src/ECanModerateThisUser.ts",
+    "./EParseTime": "./src/EParseTime.ts",
+    "./Prisma": "./src/Prisma.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "BotAppHardCodedStaticContext": [
+        "./src/BotAppHardCodedStaticContext.ts"
+      ],
+      "Discord": [
+        "./src/Discord.ts"
+      ],
+      "ECanModerateThisUser": [
+        "./src/ECanModerateThisUser.ts"
+      ],
+      "EParseTime": [
+        "./src/EParseTime.ts"
+      ],
+      "Prisma": [
+        "./src/Prisma.ts"
+      ]
+    }
+  },
+  "dependencies": {
+    "discord.js": "^14.15.3"
+  }
+}

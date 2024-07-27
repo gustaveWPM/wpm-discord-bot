@@ -1,0 +1,14 @@
+LICENSE
+node_modules
+
+dist
+typecheck-dist
+
+**/i18n/typesafe-i18n/i18n-node.ts
+**/i18n/typesafe-i18n/i18n-types.ts
+**/i18n/typesafe-i18n/i18n-util.async.ts
+**/i18n/typesafe-i18n/i18n-util.sync.ts
+**/i18n/typesafe-i18n/i18n-util.ts
+
+docker/dozzle/data/admin/profile.json
+.eslintcache

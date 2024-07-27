@@ -1,0 +1,22 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`I18n interpolators (embeds > warnCommand) warnsAmount > 0 1`] = `
+[
+  "You have been warned 0 times.",
+  "Vous avez été averti 0 fois.",
+]
+`;
+
+exports[`I18n interpolators (embeds > warnCommand) warnsAmount > singular 1`] = `
+[
+  "You have been warned 1 time.",
+  "Vous avez été averti 1 fois.",
+]
+`;
+
+exports[`I18n interpolators (embeds > warnCommand) warnsAmount > plural 1`] = `
+[
+  "You have been warned 2 times.",
+  "Vous avez été averti 2 fois.",
+]
+`;
