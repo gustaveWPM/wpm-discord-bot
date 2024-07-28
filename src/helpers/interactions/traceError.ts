@@ -36,13 +36,8 @@ function generateReport(trace: unknown, report: object) {
   /**
    * @throws {TypeError}
    */
-  function tryToStringifyReport(): StringifiedReport {
-    if (trace instanceof Error) {
-      return JSON.stringify(report, [...ERROR_PROPS_TO_PRESERVE]);
-    } else {
-      return JSON.stringify(report);
-    }
-  }
+  const tryToStringifyReport = (): StringifiedReport =>
+    trace instanceof Error ? JSON.stringify(report, [...ERROR_PROPS_TO_PRESERVE]) : JSON.stringify(report);
 
   const date = toUTC(new Date());
 
