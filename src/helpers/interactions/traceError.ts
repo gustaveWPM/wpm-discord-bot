@@ -13,8 +13,8 @@ const [RESERVED_DEEP_TRACE_KEY, RESERVED_FLAT_TRACE_KEY] = ['__DEEP_TRACE__', '_
 
 const ERROR_PROPS_TO_PRESERVE = ['message', 'name', 'stack', 'cause', 'code', ADDITIONAL_INFOS_NAMESPACE] as const;
 
-const COUNTER_TTL: MsValue = 1_200_000; // NOTE: 20 mins
-const COUNTER_THRESHOLD: Limit = 200;
+const COUNTER_TTL = 1_200_000 as const satisfies MsValue; // NOTE: 20 mins
+const COUNTER_THRESHOLD = 200 as const satisfies Limit;
 
 namespace Ctx {
   export let hasReachedThreshold = false;
