@@ -14,5 +14,5 @@ export function pickRandomMeme(locale: Locales): YoutubeMemeLink | EmptyString {
   return easterEggs[randomIndex] ?? '';
 }
 
-type YoutubeMemeLink = string;
+type YoutubeMemeLink = `https://${'www.' | ''}youtube.com/watch?v=${string}` | `https://youtu.be/${string}`;
 type YoutubeMemeLinks = YoutubeMemeLink[];
