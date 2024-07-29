@@ -1,7 +1,7 @@
 services:
-  # § D. Redis
+  # § E. Redis
   bot_app_redis:
-    container_name: wpm-discord-bot-redis
+    container_name: wpm-discord-bot-app-redis
     image: docker.dragonflydb.io/dragonflydb/dragonfly:v1.19.0
     restart: always
     ulimits:
@@ -18,6 +18,19 @@ services:
       timeout: 5s
       retries: 7
       test: ['CMD', 'redis-cli', 'ping']
+
+  # § D. Jaeger
+  jaeger:
+    container_name: jaeger
+    image: jaegertracing/all-in-one:1.59
+    restart: always
+    environment:
+      COLLECTOR_OTLP_ENABLED: 'true'
+    ports:
+      - '127.0.0.1:16686:16686'
+      - '127.0.0.1:4318:4318'
+    networks:
+      - bot_app_shared_network
 
   # § C. Dozzle
   dozzle:
@@ -80,7 +93,7 @@ services:
   # § A. Bot App
   # A. 1. Bun - Bot App
   bot_app:
-    container_name: wpm-discord-bot-bot-app
+    container_name: wpm-discord-bot-app
     build:
       context: .
       dockerfile: Dockerfile.bot-app
@@ -104,6 +117,8 @@ services:
         condition: service_healthy
       bot_app_redis:
         condition: service_healthy
+      jaeger:
+        condition: service_started
 
     develop:
       watch:
@@ -128,6 +143,9 @@ services:
           path: ./docker-compose.yml
 
         - action: rebuild
+          path: ./Dockerfile.bot-app
+
+        - action: rebuild
           path: ./Makefile
 
         - action: rebuild
@@ -150,7 +168,7 @@ services:
 
   # A. 2. PG Admin - Bot App
   bot_app_pgadmin:
-    container_name: wpm-discord-bot-bot-app-pgadmin
+    container_name: wpm-discord-bot-app-pgadmin
     image: dpage/pgadmin4:latest
     restart: always
     environment:
@@ -169,7 +187,7 @@ services:
 
   # A. 4. Postgres - Bot App
   bot_app_db:
-    container_name: wpm-discord-bot-bot-app-db
+    container_name: wpm-discord-bot-app-db
     image: postgres:16.3
     restart: always
 
