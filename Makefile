@@ -73,17 +73,22 @@ prisma-studio:
 	bunx prisma studio
 
 initialize-db:
-	mkdir -p prisma/migrations/0_init 2>/dev/null;
-	rm -f $(INIT_MIGRATION_TMP_FILE);
-	[ -e "prisma/migrations/0_init/migration.sql" ] || bunx prisma migrate diff \
-  --from-empty \
-  --to-schema-datamodel prisma/schema.prisma \
-  --script > prisma/migrations/0_init/migration.sql 2>/dev/null && \
-  \
-  echo 'create extension if not exists pgcrypto;' | cat - prisma/migrations/0_init/migration.sql > $(INIT_MIGRATION_TMP_FILE) && \
-  rm -f prisma/migrations/0_init/migration.sql && \
-  mv $(INIT_MIGRATION_TMP_FILE) prisma/migrations/0_init/migration.sql && \
-  bunx prisma migrate deploy
+	@{ \
+		mkdir -p prisma/migrations/0_init 2>/dev/null; \
+		rm -f $(INIT_MIGRATION_TMP_FILE); \
+		if [ -e "prisma/migrations/0_init/migration.sql" ]; then \
+			: ; \
+		else \
+			bunx prisma migrate diff \
+				--from-empty \
+				--to-schema-datamodel prisma/schema.prisma \
+				--script > prisma/migrations/0_init/migration.sql 2>/dev/null && \
+			echo 'create extension if not exists pgcrypto;' | cat - prisma/migrations/0_init/migration.sql > $(INIT_MIGRATION_TMP_FILE) && \
+			rm -f prisma/migrations/0_init/migration.sql && \
+			mv $(INIT_MIGRATION_TMP_FILE) prisma/migrations/0_init/migration.sql && \
+			bunx prisma migrate deploy; \
+		fi \
+	}
 
 initialize-env:
 	[ -e "$(ENV_FILE)" ] || cp "$(ENV_EXAMPLE)" "$(ENV_FILE)"
