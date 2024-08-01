@@ -19,7 +19,7 @@ function initializeTracing({
   serviceName: string;
 }): Tracer {
   const isProd = process.env.NODE_ENV?.startsWith('prod') ?? true;
-  const traceRatio = isProd ? /*0.1*/ 1.0 : 1.0;
+  const traceRatio = isProd ? 0.1 : 1.0;
 
   const tracerProvider = new NodeTracerProvider({
     resource: new Resource({
