@@ -6,7 +6,7 @@ generator client {
   provider = "prisma-client-js"
 
   // NOTE: https://github.com/prisma/prisma/issues/14765#issuecomment-1845646423
-  previewFeatures = ["nativeDistinct"]
+  previewFeatures = ["nativeDistinct", "tracing"]
 }
 
 datasource db {

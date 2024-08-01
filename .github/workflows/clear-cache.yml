@@ -1,0 +1,23 @@
+name: Cache Cleanup
+
+on:
+  schedule:
+    - cron: '0 0 */15 * *'
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Delete all GitHub Actions caches
+        run: gh cache delete --all
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
