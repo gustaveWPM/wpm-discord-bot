@@ -1,0 +1,54 @@
+name: CI/Test Docker Compose Build
+
+on:
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create .env
+        # Refer to the .env.example file
+        run: |
+          cat << EOF > .env
+          BOT_TOKEN="$BOT_TOKEN"
+          CLIENT_ID="$CLIENT_ID"
+          DEV_GUILD_ID="$DEV_GUILD_ID"
+          BOT_APP_POSTGRES_USER="$BOT_APP_POSTGRES_USER"
+          BOT_APP_POSTGRES_PASSWORD="$BOT_APP_POSTGRES_PASSWORD"
+          BOT_APP_POSTGRES_DB="$BOT_APP_POSTGRES_DB"
+          BOT_APP_PGADMIN_DEFAULT_EMAIL="$BOT_APP_PGADMIN_DEFAULT_EMAIL"
+          BOT_APP_PGADMIN_DEFAULT_PASSWORD="$BOT_APP_PGADMIN_DEFAULT_PASSWORD"
+          BOT_APP_DATABASE_URL="$BOT_APP_DATABASE_URL"
+          BOT_APP_REDIS_PORT="$BOT_APP_REDIS_PORT"
+          NEXTCLOUD_MYSQL_ROOT_PASSWORD="$NEXTCLOUD_MYSQL_ROOT_PASSWORD"
+          NEXTCLOUD_MYSQL_PASSWORD="$NEXTCLOUD_MYSQL_PASSWORD"
+          NEXTCLOUD_MYSQL_DATABASE="$NEXTCLOUD_MYSQL_DATABASE"
+          NEXTCLOUD_MYSQL_USER="$NEXTCLOUD_MYSQL_USER"
+          EOF
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          DEV_GUILD_ID: ${{ secrets.DEV_GUILD_ID }}
+          BOT_APP_POSTGRES_USER: ${{ secrets.BOT_APP_POSTGRES_USER }}
+          BOT_APP_POSTGRES_PASSWORD: ${{ secrets.BOT_APP_POSTGRES_PASSWORD }}
+          BOT_APP_POSTGRES_DB: ${{ secrets.BOT_APP_POSTGRES_DB }}
+          BOT_APP_PGADMIN_DEFAULT_EMAIL: ${{ secrets.BOT_APP_PGADMIN_DEFAULT_EMAIL }}
+          BOT_APP_PGADMIN_DEFAULT_PASSWORD: ${{ secrets.BOT_APP_PGADMIN_DEFAULT_PASSWORD }}
+          BOT_APP_DATABASE_URL: ${{ secrets.BOT_APP_DATABASE_URL }}
+          NEXTCLOUD_MYSQL_ROOT_PASSWORD: ${{ secrets.NEXTCLOUD_MYSQL_ROOT_PASSWORD }}
+          NEXTCLOUD_MYSQL_PASSWORD: ${{ secrets.NEXTCLOUD_MYSQL_PASSWORD }}
+          NEXTCLOUD_MYSQL_DATABASE: ${{ secrets.NEXTCLOUD_MYSQL_DATABASE }}
+          NEXTCLOUD_MYSQL_USER: ${{ secrets.NEXTCLOUD_MYSQL_USER }}
+          BOT_APP_REDIS_PORT: 6379
+
+      - name: Test Docker Compose build
+        run: make compose-build

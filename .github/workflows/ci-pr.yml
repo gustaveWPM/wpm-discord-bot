@@ -1,0 +1,126 @@
+name: CI/PR
+
+on:
+  pull_request:
+    branches: ['**']
+
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  format-check:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google/wireit@setup-github-actions-caching/v1
+      - uses: oven-sh/setup-bun@v2
+      - name: Install project
+        run: make install
+      - name: Formatcheck
+        run: make ci:format-check
+
+  lint:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google/wireit@setup-github-actions-caching/v1
+      - uses: oven-sh/setup-bun@v2
+      - name: Install project
+        run: make install
+
+      - uses: actions/cache@v4
+        with:
+          path: .eslintcache
+          key: eslint-cache-${{ runner.os }}-${{ hashFiles('.eslintcache') }}
+          restore-keys: |
+            eslint-cache-${{ runner.os }}-
+
+      - name: Run ESLint
+        run: make lint
+
+  typecheck-project:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: google/wireit@setup-github-actions-caching/v1
+      - name: Initialize project
+        run: make initialize
+      - name: Typecheck
+        run: make typecheck
+
+  typecheck-tests:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: google/wireit@setup-github-actions-caching/v1
+      - name: Initialize project
+        run: make initialize
+      - name: Typecheck tests
+        run: make typecheck-tests
+
+  build:
+    runs-on: 'ubuntu-latest'
+    if: github.event.pull_request.draft == false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google/wireit@setup-github-actions-caching/v1
+      - uses: oven-sh/setup-bun@v2
+      - name: Initialize project
+        run: make initialize
+      - name: Fast Build
+        run: make fast-build
+
+  ts-prune:
+    runs-on: ubuntu-20.04
+    if: github.event.pull_request.draft == false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - name: Use Python 3.10.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.10.12
+      - uses: google/wireit@setup-github-actions-caching/v1
+      - name: Backup old symbolic link
+        run: sudo cp /usr/bin/python3 /usr/bin/python3.bak
+      - name: Force symbolic link to Python 3.10.12
+        run: sudo ln -sf /opt/hostedtoolcache/Python/3.10.12/x64/bin/python3 /usr/bin/python3
+      - name: Install project
+        run: make install
+      - name: Run ts-prune
+        run: make ts-prune-verbose
+      - name: Restore old symbolic link
+        run: sudo rm -f /usr/bin/python3 && sudo mv /usr/bin/python3.bak /usr/bin/python3
+
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google/wireit@setup-github-actions-caching/v1
+      - uses: oven-sh/setup-bun@v2
+      - name: Install project
+        run: make install
+      - name: Create .env.test
+        # Refer to the .env.test.example file
+        # NOTE: Testing database is not done yet
+        run: |
+          cat << EOF > .env.test
+          BOT_TOKEN="$BOT_TOKEN"
+          CLIENT_ID="$CLIENT_ID"
+          DEV_GUILD_ID="$DEV_GUILD_ID"
+          BOT_APP_DATABASE_URL="$BOT_APP_DATABASE_URL"
+          BOT_APP_REDIS_PORT="$BOT_APP_REDIS_PORT"
+          EOF
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          DEV_GUILD_ID: ${{ secrets.DEV_GUILD_ID }}
+          BOT_APP_DATABASE_URL: ${{ secrets.BOT_APP_DATABASE_URL }}
+          BOT_APP_REDIS_PORT: 6379
+      - name: Run tests
+        run: make test
