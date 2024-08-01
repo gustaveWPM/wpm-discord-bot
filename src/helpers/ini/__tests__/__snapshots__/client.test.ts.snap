@@ -16,7 +16,7 @@ Client {
       [Function],
     ],
     "guildMemberAdd": [
-      [Function],
+      [Function: guildMemberAddCallback],
     ],
     "guildMemberUpdate": [
       [Function: AsyncFunction],
@@ -738,7 +738,7 @@ Map {
     "intents": IntentsBitField {
       "bitfield": 3276799,
     },
-    "jsonTransformer": [Function],
+    "jsonTransformer": [Function: toSnakeCase],
     "makeCache": [Function],
     "partials": [
       2,

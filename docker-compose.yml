@@ -22,13 +22,14 @@ services:
   # § D. Jaeger
   jaeger:
     container_name: jaeger
-    image: jaegertracing/all-in-one:1.59
+    image: jaegertracing/all-in-one:1.58
     restart: always
+
     environment:
       COLLECTOR_OTLP_ENABLED: 'true'
     ports:
-      - '127.0.0.1:16686:16686'
-      - '127.0.0.1:4318:4318'
+      - 127.0.0.1:16686:16686
+      - 4318:4318
     networks:
       - bot_app_shared_network
 

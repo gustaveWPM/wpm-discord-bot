@@ -1,45 +1,53 @@
+import type { AutoLoaderOptions } from '@opentelemetry/instrumentation';
+import type { Tracer } from '@opentelemetry/api';
+
 import { TraceIdRatioBasedSampler, SimpleSpanProcessor, BatchSpanProcessor } from '@opentelemetry/sdk-trace-base';
 import { SEMRESATTRS_SERVICE_VERSION, SEMRESATTRS_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
-import { AsyncHooksContextManager } from '@opentelemetry/context-async-hooks';
-import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto';
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { registerInstrumentations } from '@opentelemetry/instrumentation';
 import { NodeTracerProvider } from '@opentelemetry/sdk-trace-node';
-import { PrismaInstrumentation } from '@prisma/instrumentation';
 import { Resource } from '@opentelemetry/resources';
-import * as api from '@opentelemetry/api';
+import { trace } from '@opentelemetry/api';
 
-function initializeOtel() {
-  const traceRatio = process.env.NODE_ENV === 'production' ? 0.1 : 1.0;
-
-  const contextManager = new AsyncHooksContextManager().enable();
-
-  api.context.setGlobalContextManager(contextManager);
-
-  const exporter = new OTLPTraceExporter({
-    hostname: 'http://jaeger:4318/v1/traces'
-  });
+function initializeTracing({
+  instrumentations,
+  serviceVersion,
+  serviceName
+}: {
+  instrumentations?: AutoLoaderOptions['instrumentations'];
+  serviceVersion: string;
+  serviceName: string;
+}): Tracer {
+  const isProd = process.env.NODE_ENV?.startsWith('prod') ?? true;
+  const traceRatio = isProd ? /*0.1*/ 1.0 : 1.0;
 
   const tracerProvider = new NodeTracerProvider({
     resource: new Resource({
-      [SEMRESATTRS_SERVICE_NAME]: 'wpm-discord-bot',
-      [SEMRESATTRS_SERVICE_VERSION]: '0.1.0'
+      [SEMRESATTRS_SERVICE_VERSION]: serviceVersion,
+      [SEMRESATTRS_SERVICE_NAME]: serviceName
     }),
 
     sampler: new TraceIdRatioBasedSampler(traceRatio)
   });
 
-  if (process.env.NODE_ENV?.startsWith('prod')) {
+  const exporter = new OTLPTraceExporter({
+    url: 'http://jaeger:4318/v1/traces'
+  });
+
+  if (isProd) {
     tracerProvider.addSpanProcessor(new BatchSpanProcessor(exporter));
   } else {
     tracerProvider.addSpanProcessor(new SimpleSpanProcessor(exporter));
   }
 
   registerInstrumentations({
-    instrumentations: [new PrismaInstrumentation()],
+    instrumentations,
     tracerProvider
   });
 
   tracerProvider.register();
+
+  return trace.getTracer(serviceName);
 }
 
-export default initializeOtel;
+export default initializeTracing;
