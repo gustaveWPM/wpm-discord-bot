@@ -15,6 +15,7 @@
     "./discordjs/buildGuildInteractionFromGuildMemberToAnotherGuildMember": "./src/discordjs/buildGuildInteractionFromGuildMemberToAnotherGuildMember.ts",
     "./discordjs/canModerateThisMember": "./src/discordjs/canModerateThisMember.ts",
     "./discordjs/getBannedByMemberIdFromLogs": "./src/discordjs/getBannedByMemberIdFromLogs.ts",
+    "./discordjs/getUnbannedByMemberIdFromLogs": "./src/discordjs/getUnbannedByMemberIdFromLogs.ts",
     "./discordjs/getUserAvatar": "./src/discordjs/getUserAvatar.ts",
     "./discordjs/getUserOrGuildMemberFromSlashCommandUserOption": "./src/discordjs/getUserOrGuildMemberFromSlashCommandUserOption.ts",
     "./discordjs/isEveryoneRole": "./src/discordjs/isEveryoneRole.ts",
@@ -88,6 +89,9 @@
       ],
       "discordjs/getBannedByMemberIdFromLogs": [
         "./src/discordjs/getBannedByMemberIdFromLogs.ts"
+      ],
+      "discordjs/getUnbannedByMemberIdFromLogs": [
+        "./src/discordjs/getUnbannedByMemberIdFromLogs.ts"
       ],
       "discordjs/getUserAvatar": [
         "./src/discordjs/getUserAvatar.ts"

@@ -6,7 +6,7 @@ import type { GuildBan, Guild } from 'discord.js';
 import attemptToMoveTempBannedMemberToBannedMembersArchive from '#@/jobs/helpers/tempBans/db/attemptToMoveTempBannedMemberToBannedMembersArchive';
 import attemptToMoveDefBannedMemberToBannedMembersArchive from '#@/jobs/helpers/tempBans/db/attemptToMoveDefBannedMemberToBannedMembersArchive';
 import { attemptToTurnOffIsAbandonerFlagWithAuthorizedToManageBansBotClient } from '#@/db/dsl/guilds/isAbandonerFlagTweakers';
-import getBannedByMemberIdFromLogs from '@wpm-discord-bot/shared-lib/discordjs/getBannedByMemberIdFromLogs';
+import getUnbannedByMemberIdFromLogs from '@wpm-discord-bot/shared-lib/discordjs/getUnbannedByMemberIdFromLogs';
 import verrou, { verrouKeysFactory } from '#@/config/verrou';
 import traceError from '#@/helpers/interactions/traceError';
 import { getDiscordBotId } from '#@/client';
@@ -24,6 +24,9 @@ async function getMaybeTempBanEntry({ unbannedUserIdAsBigInt, guildIdAsBigInt }:
     select: { bannedAt: true, id: true }
   });
 
+  console.log('unbannedUserIdAsBigInt:', unbannedUserIdAsBigInt);
+  console.log('guildIdAsBigInt:', guildIdAsBigInt);
+  console.log('maybeTempBanEntry:', maybeTempBanEntry);
   return maybeTempBanEntry;
 }
 
@@ -93,13 +96,17 @@ async function guildBanRemoveCallback(guildBan: GuildBan) {
   const { guild } = guildBan;
   const { id: guildId } = guild;
 
+  console.log('... 0');
+
   try {
     await verrou
       .use('redis')
       .createLock(verrouKeysFactory.processingUnbanOnUserViaTheBot(guildId, unbannedUserId), '10s')
       .run(async () => {
+        console.log('... 1');
+
         const discordBotId = await getDiscordBotId();
-        const unbannedByMemberId = await getBannedByMemberIdFromLogs(guildBan, discordBotId);
+        const unbannedByMemberId = await getUnbannedByMemberIdFromLogs(guildBan, discordBotId);
 
         await attemptToTurnOffIsAbandonerFlagWithAuthorizedToManageBansBotClient(guild, { awaitGC: true });
 
@@ -109,8 +116,7 @@ async function guildBanRemoveCallback(guildBan: GuildBan) {
         const guildIdAsBigInt = BigInt(guildId);
         const unbannedUserIdAsBigInt = BigInt(unbannedUserId);
 
-        if (guildBan.partial) guildBan = await guildBan.fetch(true);
-
+        console.log('... 2');
         const maybeTempBanEntry = await getMaybeTempBanEntry({ unbannedUserIdAsBigInt, guildIdAsBigInt });
 
         const maybeDefBanEntry = await getMaybeDefBanEntry({ unbannedUserIdAsBigInt, guildIdAsBigInt });
