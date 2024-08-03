@@ -22,14 +22,20 @@ services:
   # § E. Elastic Search
   elasticsearch:
     container_name: elasticsearch
-    image: elasticsearch:8.14.3
+    image: elasticsearch:7.17.23
+
     environment:
       discovery.type: 'single-node'
+      ES_USE_ILM: 'true'
       xpack.security.enabled: 'false'
+      ingest.geoip.downloader.enabled: 'false'
+
     ports:
       - '127.0.0.1:9200:9200'
     networks:
       - bot_app_shared_network
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
 
     healthcheck:
       test: ['CMD-SHELL', "curl -fsSL 'http://elasticsearch:9200/_cat/health?h=status' | grep -q 'green'"]
@@ -38,6 +44,35 @@ services:
       retries: 11
 
   # § D. Jaeger
+  jaeger-es-rollover:
+    container_name: jaeger-es-rollover
+    image: jaegertracing/jaeger-es-rollover:1.58
+
+    entrypoint: ['/go/bin/es-rollover', 'init', 'http://elasticsearch:9200']
+    networks:
+      - bot_app_shared_network
+
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+  jaeger-ilm-policy:
+    container_name: jaeger-ilm-policy
+    image: alpine:3.20.2
+
+    volumes:
+      - ./docker/jaeger/jaeger-ilm-policy.sh:/jaeger-ilm-policy.sh
+    entrypoint: ['/bin/sh', '-c', 'apk add --no-cache curl && /jaeger-ilm-policy.sh']
+
+    networks:
+      - bot_app_shared_network
+
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      jaeger-es-rollover:
+        condition: service_completed_successfully
+
   jaeger:
     container_name: jaeger
     image: jaegertracing/all-in-one:1.58
@@ -47,8 +82,6 @@ services:
       COLLECTOR_OTLP_ENABLED: 'true'
       SPAN_STORAGE_TYPE: 'elasticsearch'
       ES_SERVER_URLS: 'http://elasticsearch:9200'
-      ES_INDEX_PREFIX: 'jaeger'
-      ES_ILM_POLICY_NAME: 'jaeger-ilm-policy'
     ports:
       - 127.0.0.1:16686:16686
       - 127.0.0.1:4318:4318
@@ -58,6 +91,13 @@ services:
     depends_on:
       elasticsearch:
         condition: service_healthy
+      jaeger-ilm-policy:
+        condition: service_completed_successfully
+
+    command:
+      - '--es.use-ilm=true'
+      - '--es.use-aliases=true'
+      - '--es.create-index-templates=false'
 
   # § C. Dozzle
   dozzle:
@@ -179,6 +219,9 @@ services:
           path: ./docker/utils/cron.sh
 
         - action: rebuild
+          path: ./docker/jaeger/jaeger-ilm-policy.sh
+
+        - action: rebuild
           path: ./pm2.config.cjs
 
         - action: rebuild
@@ -239,6 +282,7 @@ services:
       retries: 7
 
 volumes:
+  es-data:
   redis-data:
   bot_app_pg_data:
   test_bot_app_pg_data:
