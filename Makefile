@@ -43,11 +43,11 @@ install:
 wipe-wireit:
 	$(PM) rimraf .wireit
 
-# @Override
+# @Mirror
 build:
 	$(PM) run build
 
-# @Alias
+# @Mirror
 fast-build:
 	$(PM) run fast-build
 

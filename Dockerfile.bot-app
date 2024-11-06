@@ -21,7 +21,6 @@ ENV PATH="/root/.bun/bin:${PATH}"
 
 RUN bun install -g rimraf pm2
 
-# Étape 2 : Image finale
 FROM debian:trixie-slim
 
 ENV SHELL /bin/bash

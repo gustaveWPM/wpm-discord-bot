@@ -35,10 +35,8 @@ export type SlashCommandWithChoicesPairs = MakeSlashCommandWithChoicesPairs<(typ
 
 export type UnpredictibleLocale = string;
 
-type IsOptionWithChoices<T> = T extends ChoicesFragment ? true : false;
-
 type ExtractOptionsWithChoices<T> = {
-  [K in keyof T]: IsOptionWithChoices<T[K]> extends true ? K : never;
+  [K in keyof T]: T[K] extends ChoicesFragment ? K : never;
 }[keyof T];
 
 type MakeSlashCommandWithChoicesPairs<T extends Record<VocabKey, any>> = {
